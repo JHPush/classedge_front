@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import BasicLayout from "../layouts/BasicLayout";
+import BasicLayout from "./BasicLayout";
 import { useEffect, useState } from "react";
-import { getCookie } from "../utils/cookieUtils";
+import { getCookie } from "../../utils/cookieUtils";
 import { useSelector } from "react-redux";
 
 const MainPage = () => {

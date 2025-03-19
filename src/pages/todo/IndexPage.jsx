@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import BasicLayout from "../../layouts/BasicLayout";
+import BasicLayout from "../../components/common/BasicLayout";
 import { useCallback } from "react";
 
 const IndexPage = () => {

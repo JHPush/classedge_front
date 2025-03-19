@@ -4,15 +4,15 @@ import todoRouter from "./todoRouter";
 const { createBrowserRouter } = require("react-router-dom");
 
 const Loading = <div>Loading....</div>
-const Main = lazy(() => import("../pages/MainPage"))
+const Main = lazy(() => import("../components/common/MainPage"))
 
-const About = lazy(() => import("../pages/AboutPage"))
+const About = lazy(() => import("../components/common/AboutPage"))
 
 const TodoIndex = lazy(() => import("../pages/todo/IndexPage"))
 
 const TodoList = lazy(() => import("../pages/todo/ListPage"))
 
-const Login = lazy(() => import("../pages/todo/LoginPage"))
+const Login = lazy(() => import("../components/member/LoginPage"))
 
 const root = createBrowserRouter([
 

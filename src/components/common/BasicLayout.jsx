@@ -1,4 +1,4 @@
-import BasicMenu from "../components/menus/BasicMenu";
+import BasicMenu from "./BasicMenu";
 
 const BasicLayout = ({ children }) => {
   return (
