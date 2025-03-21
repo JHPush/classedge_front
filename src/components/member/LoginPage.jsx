@@ -55,7 +55,7 @@ const LoginPage = () => {
                         로그인
                     </button>
                 </form>
-                <button className="kakao-login-button">
+                <button className="kakao-login-button" onClick={() => window.location.href = "https://kauth.kakao.com/oauth/authorize?client_id=0dfc6bf7b966b2bdfe198d82fc657170&redirect_uri=http://localhost:8080/api/v1/login/kakao&response_type=code"}>
                     카카오 계정으로 로그인
                 </button>
                 <a href="/signup" className="signup-link">
