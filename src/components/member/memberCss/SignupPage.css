@@ -1,0 +1,109 @@
+.parent-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 화면 전체 높이를 사용 */
+    width: 100vw; /* 화면 전체 너비를 사용 */
+  }
+  
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Arial, sans-serif";
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.title {
+  text-align: center;
+  color: #333;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-top: 15px;
+}
+
+label {
+  font-size: 14px;
+  color: #555;
+}
+
+input,
+select {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+}
+
+input:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.check-button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.check-button:hover {
+  background-color: #5a6268;
+}
+
+.submit-button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.link-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #007bff;
+}
+
+.link-text a:hover {
+  text-decoration: underline;
+}
+.password-overlap{
+  color: red;
+  margin-bottom: 10px;
+}
+
+.password-confirm{
+  color: blue;
+  margin-bottom: 10px;
+}
+
+.password-overlap-middle{
+  color:red;
+  text-align: center;
+}

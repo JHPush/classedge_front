@@ -1,7 +1,15 @@
+.parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 화면 전체 높이를 사용 */
+  width: 100vw; /* 화면 전체 너비를 사용 */
+}
+
+/* 로그인 컨테이너 */
 .login-container {
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -60,4 +68,10 @@
 
 .signup-link:hover {
   text-decoration: underline;
+}
+
+
+.login-submit{
+  color: red;
+  margin-bottom: 10px;
 }
