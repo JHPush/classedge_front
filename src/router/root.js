@@ -1,5 +1,7 @@
 import { Suspense, lazy } from "react";
 import todoRouter from "./todoRouter";
+import ViewPage from "../components/common/ViewPage";
+import WritePage from "../components/common/WritePage"
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -14,6 +16,7 @@ const TodoList = lazy(() => import("../pages/todo/ListPage"))
 
 const Login = lazy(() => import("../components/member/LoginPage"))
 
+const PostView = lazy(() => import("../components/post/PostView"))
 const root = createBrowserRouter([
 
   {
@@ -31,8 +34,16 @@ const root = createBrowserRouter([
   {
     path: "todo",
     element: <Suspense fallback={Loading}><TodoIndex /></Suspense>,
-    children: todoRouter()
-  }
+    children: todoRouter(),
+  },
+  {
+    path: "view/:id",
+    element: <Suspense fallback={Loading}><ViewPage /></Suspense>
+  },
+  {
+    path: "write",
+    element: <Suspense fallback={Loading}><WritePage /></Suspense>
+  },
 
 
 ])
