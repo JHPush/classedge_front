@@ -6,9 +6,11 @@ const LogoutBtn = () => {
     const navi = useNavigate();
 
     const handleLogout = () => {
-        alert("로그아웃 되었습니다");
-        removeCookie('member')
-        navi('/login', {replace:true})
+            alert("로그아웃 되었습니다");
+            removeCookie('member')
+            navi('/login', { replace: true })
+        
+
     };
 
     return (
