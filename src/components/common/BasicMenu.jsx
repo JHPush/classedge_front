@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import AlertPop from "../member/AlertPop";
+import LogoutBtn from "../member/LogoutBtn";
 
 const BasicMenu = () => {
   return (
@@ -21,9 +22,7 @@ const BasicMenu = () => {
 
       <div className="w-1/5 flex justify-end bg-orange-300 p-4 font-medium">
         <AlertPop />
-        <div className="text-white text-sm m-1 rounded" >
-          Login
-        </div>
+        <LogoutBtn />
       </div>
     </nav>
   );

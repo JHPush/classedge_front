@@ -29,32 +29,36 @@ const requestFail = (error) => {
 
 }
 const beforeRes = async (res) => { 
-    console.log("before Response ....")
-    console.log("res : ", res)
+    console.log("before Response ....");
+    console.log("res : ", res);
 
     const data = res.data;
-    if (data || data.error === 'ERROR_ACCESS_TOKEN') {
-        const memberCookie = getCookie('member')
-        getRefresh(memberCookie.accessToken, memberCookie.refreshToken)
-            .then(data => {
-                console.log("data : ", data);
-                memberCookie.accessToken = data.accessToken;
-                memberCookie.refreshToken = data.refreshToken;
+    if (data && data.error === 'ERROR_ACCESS_TOKEN') { 
+        const memberCookie = getCookie('member');
+        return getRefresh(memberCookie.accessToken, memberCookie.refreshToken)
+            .then(newTokens => {
+                console.log("newTokens : ", newTokens);
+
+                // 쿠키 업데이트
+                memberCookie.accessToken = newTokens.accessToken;
+                memberCookie.refreshToken = newTokens.refreshToken;
                 setCookie('member', JSON.stringify(memberCookie), 1);
 
-                const originReqeusst = res.config; // 기존 리퀘스트 정보 가져옴
-                originReqeusst.headers.Authorization = data.accessToken;
+                // 기존 요청을 재전송
+                const originRequest = res.config;
+                originRequest.headers.Authorization = `Bearer ${newTokens.accessToken}`;
 
-                return axios(originReqeusst);
-
+                return axios(originRequest);
             })
             .catch(e => {
-                console.error("Error in beforeRes from jws Utils : ", e);
-            })
-
-        return res;
+                console.error("Error in beforeRes from jwtUtils : ", e);
+                return Promise.reject(e);
+            });
     }
-}
+    
+    return res; // 토큰 만료가 아닐 경우 원래 응답 반환
+};
+
 const responseFail = (error) => {
     console.error("responseFail : ", error)
     return Promise.reject(error);
