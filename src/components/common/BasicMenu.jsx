@@ -18,6 +18,9 @@ const BasicMenu = () => {
           <li className="pr-6 text-2xl">
             <Link to={'/view/1'}>View</Link>
           </li>
+          <li className="pr-6 text-2xl">
+            <Link to={'/write'}>Write</Link>
+          </li>
         </ul>
       </div>
 

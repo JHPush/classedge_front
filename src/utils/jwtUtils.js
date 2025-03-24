@@ -33,7 +33,7 @@ const beforeRes = async (res) => {
     console.log("res : ", res)
 
     const data = res.data;
-    if (data || data.error === 'ERROR_ACCESS_TOKEN') {
+    if (data && data.error === 'ERROR_ACCESS_TOKEN') {
         const memberCookie = getCookie('member')
         getRefresh(memberCookie.accessToken, memberCookie.refreshToken)
             .then(data => {
@@ -52,8 +52,9 @@ const beforeRes = async (res) => {
                 console.error("Error in beforeRes from jws Utils : ", e);
             })
 
-        return res;
     }
+    return res;
+
 }
 const responseFail = (error) => {
     console.error("responseFail : ", error)

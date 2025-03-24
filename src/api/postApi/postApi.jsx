@@ -9,12 +9,16 @@ export const getPost = async(id) =>{
 
   
     const res = await jwtAxios.get(`${prefix}/posts/${id}`)
+    console.log("res: " ,res);
     return res.data;
+   
+    
 }
 
 
 export const getComment = async(id) =>{
     const res = await jwtAxios.get(`${prefix}/comments/${id}`)
+    console.log("res: " ,res);
     return res.data;
 }
 
@@ -23,6 +27,7 @@ export const postComment = async(comment) =>{
     
     const res = await jwtAxios.post(`${prefix}/comments/register`, comment)
     return res.data;
+    
 
 }
 
@@ -38,3 +43,9 @@ export const registerPost = async (post) => {
       return response.data;
     
   }
+
+
+export const uploadFile =async(id) =>{
+    const res = await jwtAxios.get(`${prefix}/files/upload`, {responseType:'blob'})
+    return res.data;
+}

@@ -3,7 +3,7 @@ import { downloadFile } from "../../api/postApi/postApi";
 import './postCss/File.css'
 
        
-const FileHandler = ({file}) => {
+const FileDownload = ({file}) => {
 
     const [thumbnailUrl, SetThumbnailUrl] = useState(null);
 
@@ -64,4 +64,4 @@ const FileHandler = ({file}) => {
     )
 }
 
-export default FileHandler;
+export default FileDownload;
