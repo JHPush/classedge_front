@@ -65,21 +65,23 @@
     color: #333;
   }
   
-  /* 버튼 스타일 */
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    margin-top: 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
+ 
+ /* 버튼 스타일 */
+button {
+  background-color: #007bff;  /* 기본 파란색 */
+  color: black;  /* 글씨색을 흰색으로 */
+  border: none;
+  padding: 6px 12px;
+  margin-top: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* hover 시 색상 변화 제거 */
+button:hover {
+  background-color: #007bff;
+}
+
   
   /* 댓글 입력 폼 스타일 */
   .form-container {

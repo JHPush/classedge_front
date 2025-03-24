@@ -28,7 +28,7 @@ const Postwrite = () => {
           alert('제목을 입력하세요');
     }else if(! post.contents){
           alert('내용을 입력하세요');
-    }else{ if(confirm("게시글을 등록하시겠습니까?")){
+    }else{ if(window.confirm("게시글을 등록하시겠습니까?")){
             registerPost(post)
                   .then(data =>{
                       setPost({...initialState});
