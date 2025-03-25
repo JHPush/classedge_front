@@ -1,24 +1,30 @@
 import { useState } from "react";
 import { uploadFile } from "../../api/postApi/postApi";
 
-const FileUpload = ({postId}) =>{
+const FileUpload = ({postId, commentId, onUploaded}) =>{
 
    
-    const [file, setFile] = useState(null);
+    const [files, setFiles] = useState([]);
 
     const handleFileChange = (e) =>{
-        const selectedFiles = Array.from(e.target.file); 
-        setFile(selectedFiles);
+        const selectedFiles = e.target.files;
+        setFiles(selectedFiles);
+        console.log(selectedFiles);
+        
     }
 
     const handleUpload = () =>{
-        if(!file){
+        if(!files){
             alert("파일을 선택하세요")
+        } if(!postId){
+            alert("게시글을 먼저 등록해주세요")
         }else {
-            uploadFile(file, postId)
+            uploadFile(files, postId, commentId)
                 .then((data) => {
                     console.log("파일업로드 성공", data);
+                    onUploaded();
                     
+
                 })
                 .catch(error =>{
                     console.error("error:", error);
@@ -29,8 +35,7 @@ const FileUpload = ({postId}) =>{
     return(
         <>
         <div>
-            <h2>파일 업로드</h2>
-            <input type="file" onChange={handleFileChange} multiple />
+            <input type="file" onChange={handleFileChange} multiple/>
             <button onClick={handleUpload}>업로드</button>
         </div>
         

@@ -47,7 +47,7 @@ const SubCommentForm = ({id, parentId, onCommentAdded}) => {
                 <input type="text" name="content" placeholder="답글을 입력하세요." value={content} onChange={(handleChange)} />
             </div>
             <div>
-                <button type="button" onClick={(handleReplyClick)} >답글등록</button>
+                <button type="button" onClick={(handleReplyClick)} >등록</button>
             </div>  
         </div>
         </>
