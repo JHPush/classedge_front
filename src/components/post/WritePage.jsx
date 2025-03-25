@@ -1,5 +1,5 @@
 import Postwrite from "../post/PostWrite";
-import BasicLayout from "./BasicLayout";
+import BasicLayout from "../common/BasicLayout";
 
 const WritePage = () => {
   return (

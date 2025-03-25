@@ -1,5 +1,5 @@
 import PostView from "../post/PostView";
-import BasicLayout from "./BasicLayout";
+import BasicLayout from "../common/BasicLayout";
 
 const ViewPage = () => {
   return (
