@@ -8,12 +8,13 @@ const initialState ={
     title: '',
     nickname: '',
     contents: '',
-    boardName: '',
+    boardName: 'NOTICE',
     lmiDate: ''
 }
 
 const Postwrite = () => {
   const [post, setPost] = useState({...initialState});
+  const [postId, setPostId] = useState(null);
  // const navigate = useNavigate();  // 페이지 이동을 위한 hook
 
 
@@ -23,17 +24,19 @@ const Postwrite = () => {
     setPost({...post, [name]: value})
     };
 
-
   const handleClickSave =() =>{
 
     if(! post.title){
           alert('제목을 입력하세요');
+
     }else if(! post.contents){
           alert('내용을 입력하세요');
+          
     }else{ if(window.confirm("게시글을 등록하시겠습니까?")){
             registerPost(post)
                   .then(data =>{
-                      setPost({...initialState});
+                    setPostId(data.id)
+                    setPost({...initialState});
                       
                   })
                   .catch(error =>{
@@ -79,7 +82,7 @@ const Postwrite = () => {
             <div className="form-actions">
             <button type="button" onClick={(handleClickSave)} >등록</button>
             </div>    
-            
+            {postId && <FileUpload postId={postId} />}
         </div>
 
        

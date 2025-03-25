@@ -45,7 +45,14 @@ export const registerPost = async (post) => {
   }
 
 
-export const uploadFile =async(id) =>{
-    const res = await jwtAxios.get(`${prefix}/files/upload`, {responseType:'blob'})
+export const uploadFile =async(file, postId) =>{
+
+    const formData = new FormData();
+
+    
+    formData.append('file', file);
+    formData.append('postId', postId);
+
+    const res = await jwtAxios.post(`${prefix}/files/upload`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
     return res.data;
 }
