@@ -2,6 +2,8 @@ import React,{ useEffect, useState } from "react";
 import { getComment} from "../../api/postApi/postApi";
 import SubCommentForm from "./SubCommentForm";
 import FileDownload from "./FileDownload";
+import CommentDelete from "./CommentDelete";
+
 
 
 const initialState = {
@@ -16,13 +18,14 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
 
     const [comments, setComments] = useState([]);
     const [replyVisible, setReplyVisible] = useState(null);
+  // const[updatedComments, SetUpdatedComments] = useState(comments);
 
     useEffect(() => {
         //댓글 정보
         getComment(id)
         .then((data) => {
-          console.log(data);
-            setComments(data);
+          console.log("------------------------",data);
+          setComments(data);
         })
         .catch((error) => {
         console.error("Error: ", error);
@@ -32,7 +35,24 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
 
     //답글작성
     const handleReplyChange = (commentId) => {
-    setReplyVisible(replyVisible === commentId ? null : commentId)
+        setReplyVisible(replyVisible === commentId ? null : commentId)
+    }
+
+    //답글작성 되면 입력창 닫기
+    const handleReplyAdded = () => {
+        setReplyVisible(null);
+        onCommentAdded();
+    }
+
+    //댓글삭제
+    const handleDeleteSuccess = (deletedCommentId) => {
+      setComments(prev => prev
+        .map(comment => ({
+            ...comment,
+            subComments: comment.subComments.filter(subComment => subComment.id !== deletedCommentId) // 답글 삭제
+        })) 
+        .filter(comment => comment.id !== deletedCommentId) // 원댓글 삭제
+      )
     }
 
 
@@ -43,8 +63,6 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
     <div className="comments-section">
           <h3>댓글 목록</h3>
           <ul>
-          
-          {console.log("hiih " +comments.length)}
         {comments.length > 0 ? (
           comments.map((comment) => (
             <li key={comment.id} style={{ marginLeft: `${comment.level * 20}px` }}>
@@ -62,12 +80,7 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
               </div>
             )}
 
-            {/* 답글 버튼 */}
-            <button onClick={() => handleReplyChange(comment.id)}>답글 달기</button>
-            {replyVisible === comment.id && (
-                <SubCommentForm id={id} parentId={comment.id} onCommentAdded={onCommentAdded} />
-              )}
-
+            
               {/* 답글 내용 표시 */}
               {comment.subComments && comment.subComments.length > 0 && (
                 <ul>
@@ -76,10 +89,23 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
                       <div><span style={{ fontWeight: 'bold' }}>작성자 : </span>{subComment.nickname}</div>
                       <div><span style={{ fontWeight: 'bold' }}>작성일 : </span>{subComment.regDate}</div>
                       <div><span style={{ fontWeight: 'bold' }}>내용 : </span>{subComment.content}</div>
+                      <CommentDelete id={subComment.id} onDeleteSuccess={handleDeleteSuccess} />
                     </li>
+                    
                   ))}
                 </ul>
                   )}
+
+              {/* 댓글삭제 */}
+              <CommentDelete id={comment.id} hasReplies={comment.subComments.length > 0} onDeleteSuccess={handleDeleteSuccess} />
+
+
+            {/* 답글 버튼 */}
+            <button onClick={() => handleReplyChange(comment.id)}>답글 달기</button>
+            {replyVisible === comment.id && (
+                <SubCommentForm id={id} parentId={comment.id} onCommentAdded={handleReplyAdded} />
+              )}
+
                 </li>
               ))
             ) : (

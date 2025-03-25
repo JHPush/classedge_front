@@ -15,6 +15,7 @@ const initialState ={
 const Postwrite = () => {
   const [post, setPost] = useState({...initialState});
   const [postId, setPostId] = useState(null);
+  //const [uploadVisible, setUploadVisible] = useState(false); //파일 업로드 창
  // const navigate = useNavigate();  // 페이지 이동을 위한 hook
 
 
@@ -37,6 +38,7 @@ const Postwrite = () => {
                   .then(data =>{
                     setPostId(data.id)
                     setPost({...initialState});
+                    console.log("postid:" ,data.id);
                       
                   })
                   .catch(error =>{
@@ -48,6 +50,10 @@ const Postwrite = () => {
         }
   }
 
+//   const toggleUpload = () =>{
+//     setUploadVisible(!uploadVisible);
+//   }
+
   return (
     <>
         <div className="form-container">
@@ -56,7 +62,7 @@ const Postwrite = () => {
 
             <div className="form-group-horizontal">
                 <label htmlFor="boardName">카테고리</label>
-                <select name="boardName" vlaue={post.boardName} onChange={handleChange}>
+                <select name="boardName" value={post.boardName} onChange={handleChange}>
                     <option value={"NOTICE"}>공지사항</option>
                     <option value={"TASK"}>과제</option>
                 </select>
@@ -81,8 +87,21 @@ const Postwrite = () => {
             </div>
             <div className="form-actions">
             <button type="button" onClick={(handleClickSave)} >등록</button>
-            </div>    
-            {postId && <FileUpload postId={postId} />}
+            </div>   
+            {postId && <FileUpload postId={postId} commentId={null}/>}
+            {/* 업로드 버튼
+            {postId && (
+            <>
+                {!uploadVisible ? ( 
+                    <button type="button" onClick={toggleUpload}>파일 업로드</button>
+                ) : (
+                <>
+                <FileUpload postId={postId} commentId={null}/>
+                    <button type="button" onClick={toggleUpload}>업로드 안함</button>
+                </>
+                )}
+            </>
+                )} */}
         </div>
 
        

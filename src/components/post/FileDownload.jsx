@@ -54,7 +54,7 @@ const FileDownload = ({file}) => {
         <>
         <div>
         <div className="thumbnail">
-            {thumbnailUrl ? (<img src={thumbnailUrl} alt={file.fileName} className="file-thumbnail"/>) : (<span>썸네일 없음</span>)}
+            {thumbnailUrl ? (<img src={thumbnailUrl} alt={file.fileName} className="file-thumbnail"/>) : (<span></span>)}
             
         </div>
 
