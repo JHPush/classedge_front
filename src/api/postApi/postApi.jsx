@@ -50,6 +50,11 @@ export const deleteComment = async(id) =>{
     return res.data
 }
 
+//댓글수정
+// export const putComment =async(comment) =>{
+//     const res = await jwtAxios.put(`${prefix}/comments/${id}`,{content: content})
+//     return res.data
+// }
 
 
 //파일다운로드
