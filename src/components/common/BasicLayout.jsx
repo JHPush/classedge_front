@@ -9,7 +9,6 @@ const BasicLayout = ({ children }) => {
   const id = useSelector(state => state.loginSlicer.id);
 
   useEffect(()=>{
-    console.log(id);
     if (!id)
       navi('/login', { replace: true });
   },[])

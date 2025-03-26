@@ -6,41 +6,58 @@ const API_SERVER_HOST = 'http://localhost:8080';
 const prefix = `${API_SERVER_HOST}/api/v1`;
 
 
-export const getPostBoard = async (limit) => { 
+export const getPostBoard = async (limit) => {
     console.log('limit : ', limit);
-    const res = await jwtAxios.get(`${prefix}/posts`, { params: {limit} });  //posts?limit=5
+    const res = await jwtAxios.get(`${prefix}/posts`, { params: { limit } });  //posts?limit=5
     return res.data;
 }
-export const getComment = async(id) =>{
+export const getComment = async (id) => {
     const res = await jwtAxios.get(`${prefix}/comments/${id}`)
-    console.log("res: " ,res);
+    console.log("res: ", res);
     return res.data;
 }
 
 //댓글등록
-export const postComment = async(comment) =>{
+export const postComment = async (comment) => {
     const res = await jwtAxios.post(`${prefix}/comments/register`, comment)
     return res.data;
 }
 
 
 //게시글등록
-export const registerPost = async (post) => {
+export const registerPost = async (post, files) => {
+    const formData = new FormData();
 
-      const response = await jwtAxios.post(`${prefix}/posts/register`, post);
-      return response.data;
-}
+    // Blob을 사용하여 JSON 데이터를 추가해야 함
+    const jsonBlob = new Blob([JSON.stringify(post)], { type: 'application/json' });
+    formData.append('postDto', jsonBlob);  // postDto를 Blob으로 변환 후 추가
+
+    // 파일 추가
+    const fileArr = [...files]
+    fileArr.forEach((file) => {
+        formData.append('files', file);
+    });
+
+    // 요청 보내기
+    const response = await jwtAxios.post(`${prefix}/posts/register`, formData, {
+        headers: {
+            // 'Content-Type'을 지정하지 않음 (자동 설정)
+        }}
+    )
+    
+    return response.data;
+};
 
 
 //게시글삭제
-export const deletePost = async(id) =>{
+export const deletePost = async (id) => {
     const res = await jwtAxios.delete(`${prefix}/posts/${id}`)
     return res.data
 }
 
 
 //댓글삭제
-export const deleteComment = async(id) =>{
+export const deleteComment = async (id) => {
     const res = await jwtAxios.delete(`${prefix}/comments/${id}`)
     return res.data
 }
@@ -53,34 +70,34 @@ export const deleteComment = async(id) =>{
 
 
 //파일다운로드
-export const downloadFile = async(id) =>{
-    const res = await jwtAxios.get(`${prefix}/files/download/${id}`, {responseType:'blob'})
+export const downloadFile = async (id) => {
+    const res = await jwtAxios.get(`${prefix}/files/download/${id}`, { responseType: 'blob' })
     return res.data;
 }
 
 
 //파일업로드
-export const uploadFile =async(files, postId, commentId) =>{
+export const uploadFile = async (files, postId, commentId) => {
 
     const formData = new FormData();
 
-    Array.from(files).forEach((file) => {formData.append('files', file);})
+    Array.from(files).forEach((file) => { formData.append('files', file); })
     if (postId !== null) {
-    formData.append('postId', postId);
+        formData.append('postId', postId);
     }
     //게시글 작성시 commentid가 null인 경우 방지 
-    if ( commentId !== null) {
-    formData.append('commentId', commentId);
+    if (commentId !== null) {
+        formData.append('commentId', commentId);
     }
 
-    const res = await jwtAxios.post(`${prefix}/files/upload`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    const res = await jwtAxios.post(`${prefix}/files/upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
     return res.data;
 }
 
 // 게시글 상세조회
-export const getPost = async(id) =>{
+export const getPost = async (id) => {
     const res = await jwtAxios.get(`${prefix}/posts/${id}`)
-    console.log("res: " ,res);
+    console.log("res: ", res);
     return res.data;
 }
 
@@ -101,14 +118,14 @@ export const getPosts = async (pageParam) => { // { page: 1, size: 10, keyfield:
     console.log('keyword : ', keyword);
     console.log('boardName : ', boardName);
 
-    const res = await jwtAxios.get(`${prefix}/posts/search`, { params: {  keyfield, keyword, boardName, page, size } });  //posts?page=1&size=10
+    const res = await jwtAxios.get(`${prefix}/posts/search`, { params: { keyfield, keyword, boardName, page, size } });  //posts?page=1&size=10
 
     return res.data;
 }
 
 
 //파일 삭제
-export const deleteFile = async(id) =>{
+export const deleteFile = async (id) => {
     const res = await jwtAxios.delete(`${prefix}/files/${id}`)
     return res.data
 }

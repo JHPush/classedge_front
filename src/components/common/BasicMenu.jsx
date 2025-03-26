@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { getCookie } from "../../utils/cookieUtils";
+import { useSelector } from "react-redux";
 
 const BasicMenu = () => {
 
-  const member = getCookie('member')
+  const member = useSelector(state=>state.loginSlicer)
 
   return (
+    member != null? 
     <nav className="bg-white shadow-md p-4 flex justify-between items-center">
-
       {/* 왼쪽 메뉴 */}
       <div className="flex space-x-6">
         <Link to="/" className="text-lg font-semibold text-gray-700 hover:text-blue-500 transition">🏠 Home</Link>
@@ -31,6 +32,7 @@ const BasicMenu = () => {
       </div>
 
     </nav>
+    :<></>
   );
 }
 
