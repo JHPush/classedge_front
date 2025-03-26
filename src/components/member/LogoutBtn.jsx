@@ -9,8 +9,6 @@ const LogoutBtn = () => {
             alert("로그아웃 되었습니다");
             removeCookie('member')
             navi('/login', { replace: true })
-        
-
     };
 
     return (

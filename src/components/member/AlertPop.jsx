@@ -114,7 +114,7 @@ const AlertPop = () => {
                 type="button"
                 onClick={handleOnClickPopUp}
             >
-                <img src="alert_normal.png" alt="알림 아이콘" className="w-8 h-8" />
+                <img src="/alert_red.png" className="w-8 h-8" />
                 {notifications.filter(notify => !notify.isRead).length > 0 && (
                     <span className="absolute top-0 right-0 w-5 h-5 text-xs text-white bg-red-500 rounded-full">
                         {notifications.filter(notify => !notify.isRead).length}

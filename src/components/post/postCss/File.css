@@ -1,0 +1,34 @@
+.file-download-btn {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: transparent;
+    color: inherit;
+    font-size: 14px;
+  }
+  
+  .file-download-btn:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .file-download-btn:focus {
+    outline: none;
+  }
+/* 썸네일 이미지 스타일 */
+.thumbnail {
+  margin-top: 10px;
+  width: auto;  /* 가로 크기를 자동 조정 */
+  height: auto; /* 세로 크기를 자동 조정 */
+  max-width: 100%; /* 부모 요소 너비를 초과하지 않도록 */
+  max-height: 100%; /* 부모 요소 높이를 초과하지 않도록 */
+  overflow: hidden;
+}
+
+.file-thumbnail {
+  width: auto;  /* 원본 크기로 유지 */
+  height: auto; /* 원본 크기로 유지 */
+  max-width: 100%; /* 화면 크기에 맞게 제한 */
+  max-height: 100%; /* 화면 크기에 맞게 제한 */
+  border-radius: 4px;
+}

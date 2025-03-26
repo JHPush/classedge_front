@@ -1,0 +1,108 @@
+/* Overall layout for post detail */
+.post-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.post-info {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.post-item {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.post-item strong {
+  font-weight: bold;
+}
+
+.post-item.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.post-item.content {
+  font-size: 18px;
+  color: #555;
+}
+
+.post-item.date, .post-item.category {
+  font-size: 14px;
+  color: #888;
+}
+
+.post-item.category {
+  font-style: italic;
+}
+
+.post-files {
+  background-color: #f1f1f1;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
+.file-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-actions {
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.modify-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modify-button:hover {
+  background-color: #45a049;
+}
+
+.comment-section {
+  margin-top: 40px;
+}
+
+.comments-header {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.comment-form-container {
+  margin-top: 20px;
+}
+
+.comment-form-container input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  width: 100%;
+  border: 1px solid #ddd;
+}

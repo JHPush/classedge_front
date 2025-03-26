@@ -1,26 +1,28 @@
 import { Suspense, lazy } from "react";
-import todoRouter from "./todoRouter";
-import memberRouter from "./memberRouter";
+import ViewPage from "../components/post/ViewPage";
+import WritePage from "../components/post/WritePage"
+import ModifyPage from "../components/post/ModifyPage";
 
 const { createBrowserRouter } = require("react-router-dom");
 
 const Loading = <div>Loading....</div>
-const Main = lazy(() => import("../components/common/MainPage"))
-
-const About = lazy(() => import("../components/common/AboutPage"))
-
-const TodoIndex = lazy(() => import("../pages/todo/IndexPage"))
-
-const TodoList = lazy(() => import("../pages/todo/ListPage"))
+const Home = lazy(() => import("../components/post/HomePage"))
 
 const Login = lazy(() => import("../components/member/LoginPage"))
 const SignUp = lazy(()=> import("../components/member/SignupPage"))
+
+const Task = lazy(()=>import("../components/post/TaskPage"))
+
 
 const root = createBrowserRouter([
 
   {
     path: "",
-    element: <Suspense fallback={Loading}><Main /></Suspense>
+    element: <Suspense fallback={Loading}><Home /></Suspense>
+  },
+  {
+    path: "task",
+    element: <Suspense fallback={Loading}><Task /></Suspense>
   },
   {
     path: "login",
@@ -31,14 +33,19 @@ const root = createBrowserRouter([
     element: <Suspense fallback={Loading}><SignUp /></Suspense>
   },
   {
-    path: "about",
-    element: <Suspense fallback={Loading}><About /></Suspense>
+    path: "view/:id",
+    element: <Suspense fallback={Loading}><ViewPage /></Suspense>
   },
   {
-    path: "todo",
-    element: <Suspense fallback={Loading}><TodoIndex /></Suspense>,
-    children: todoRouter()
-  }
+    path: "write",
+    element: <Suspense fallback={Loading}><WritePage /></Suspense>
+  },
+  {
+    path: "modify/:id",
+    element: <Suspense fallback={Loading}><ModifyPage /></Suspense>
+  },
+
+
 
 
 ])
