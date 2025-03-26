@@ -6,6 +6,7 @@ import "./postCss/PostView.css"
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
 import PostDelete from "./PostDelete";
+import { useSelector } from "react-redux";
 
 
 
@@ -22,6 +23,7 @@ const initialState = {
 
 
 const PostView = () => {
+  const nickname = useSelector(state => state.loginSlicer.nickname);
 
     const {id} = useParams();
     const [post, setPost] = useState({...initialState})
@@ -96,7 +98,7 @@ const PostView = () => {
             )}
             
             {/* 버튼 */}
-            <div className="flex justify-end mt-6 space-x-2">
+            {post.nickname === nickname? <div className="flex justify-end mt-6 space-x-2">
                 <button onClick={handleModifyClick} className="bg-gray-400 text-white px-3 py-1 rounded-lg hover:bg-gray-500 transition">
                     수정
                 </button>
@@ -104,7 +106,8 @@ const PostView = () => {
                 {/* <button className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition">
                     삭제
                 </button> */}
-            </div>
+            </div> : <></>}
+            
         </div>
     
         <div className="comment-section">

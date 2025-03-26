@@ -4,6 +4,7 @@ import { getPosts } from '../../api/postApi/postApi';
 import { usePageHooks } from '../../hooks/pageHooks';
 import PageComponent from "./PageComponent";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
 
 
 const PostPageComponent = () => {
+  const role = useSelector(state => state.loginSlicer.role);
 
   const [searchParams] = useSearchParams();
   const location = useLocation();
@@ -38,6 +40,7 @@ const PostPageComponent = () => {
 
   useEffect(() => {
     console.log(location.state)
+    console.log("role : ", role)
     const keyfieldParam = searchParams.get('keyfield') || '';
     const keywordParam = searchParams.get('keyword') || '';
 
@@ -141,9 +144,10 @@ const PostPageComponent = () => {
           </div>
 
           {/* 📝 글쓰기 버튼 (맨 오른쪽 정렬) */}
-          <button className="text-white bg-blue-500 hover:bg-blue-600 font-semibold py-2 px-4 rounded ml-auto" onClick={() => { navi('/write') }}>
+          
+          {role === 'PROFESSOR'? <button className="text-white bg-blue-500 hover:bg-blue-600 font-semibold py-2 px-4 rounded ml-auto" onClick={() => { navi('/write') }}>
             글쓰기
-          </button>
+          </button> : <></>}
 
         </div>
 

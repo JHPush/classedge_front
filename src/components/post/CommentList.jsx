@@ -5,6 +5,7 @@ import FileDownload from "./FileDownload";
 import CommentDelete from "./CommentDelete";
 import CommentModify from "./CommentModify";
 import "./postCss/Comment.css"
+import { useSelector } from "react-redux";
 
 
 
@@ -17,6 +18,7 @@ const initialState = {
 
 
 const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
+  const nickname = useSelector(state => state.loginSlicer.nickname);
 
     const [comments, setComments] = useState([]);
     const [replyVisible, setReplyVisible] = useState(null);
@@ -159,9 +161,10 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
                               )}
                             </>
                           )}
-  
-                          {editMode !== subComment.id && <button onClick={() => handleEditToggle(subComment.id)}>수정</button>}
-                          <CommentDelete id={subComment.id} onDeleteSuccess={handleDeleteSuccess} />
+                          {nickname === subComment.nickname? 
+                          <>
+                          {editMode !== subComment.id && <button onClick={() => handleEditToggle(subComment.id)}>수정</button>} 
+                          <CommentDelete id={subComment.id} onDeleteSuccess={handleDeleteSuccess} /></> : <></>}
                         </li>
                       ))}
                     </ul>
@@ -169,8 +172,10 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
                 )}
   
                 <div className="comment-actions">
-                  {editMode !== comment.id && (<button onClick={() => handleEditToggle(comment.id)}>수정</button>)}
-                  <CommentDelete id={comment.id} hasReplies={comment.subComments.length > 0} onDeleteSuccess={handleDeleteSuccess} />
+                  {nickname === comment.nickname? 
+                          <>
+                          {editMode !== comment.id && <button onClick={() => handleEditToggle(comment.id)}>수정</button>} 
+                          <CommentDelete id={comment.id} onDeleteSuccess={handleDeleteSuccess} /></> : <></>}
                 </div>
   
                 <div className="reply-actions">
