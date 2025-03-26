@@ -5,9 +5,10 @@ import FileDelete from "./FileDelete";
 import FileDownload from "./FileDownload";
 
 
-const CommentModify = ({id, currentContent , onModified, fileItems, isEditing, thumbnailUrl}) => {
+const CommentModify = ({id, currentContent , onModified, fileItems, isEditing, onFileDeleted}) => {
 
     const [content, setContent] =useState(currentContent);
+    const [files, setFiles] = useState(fileItems);
     
 
     const handleClickModify = async () => {
@@ -31,9 +32,11 @@ const CommentModify = ({id, currentContent , onModified, fileItems, isEditing, t
       };
 
 
+    //파일 삭제시 상태 전달
     const handleFileDeleted = (fileId) =>{
         console.log("deleted file id:", fileId);
-        
+        setFiles(prevFiles => prevFiles.filter(file => file.id !== fileId));
+        onFileDeleted(id, fileId);
     }
 
     return(

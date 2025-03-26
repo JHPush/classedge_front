@@ -93,6 +93,19 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
       onCommentAdded();
   };
 
+   // 파일 즉시 삭제 처리
+   const handleFileDeleted = (commentId, fileId) => {
+    setComments((prevComments) =>
+        prevComments.map((comment) =>
+            comment.id === commentId
+                ? {
+                    ...comment,
+                    fileItems: comment.fileItems.filter((file) => file.id !== fileId),
+                }
+                : comment
+        )
+    );
+}
 
 
   return (
@@ -114,7 +127,7 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
                     currentContent={comment.content} 
                     fileItems={comment.fileItems} 
                     isEditing={true} // 수정 모드 여부 전달
-                    onModified={handleModify} 
+                    onModified={handleModify} onFileDeleted={handleFileDeleted}
                   />
                 ) : (
                   <>
