@@ -78,7 +78,7 @@ const CommentForm = ({ id, onCommentAdded }) => {
             id="file-upload"
             className="file-input"
             ref={fileInputRef}
-            onChange={handleFileChange}
+            onChange={handleFileChange} multiple
           />
         </div>
         <div className="submit-button-group">
