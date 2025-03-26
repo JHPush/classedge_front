@@ -3,6 +3,8 @@ import { getComment} from "../../api/postApi/postApi";
 import SubCommentForm from "./SubCommentForm";
 import FileDownload from "./FileDownload";
 import CommentDelete from "./CommentDelete";
+import CommentModify from "./CommentModify";
+import "./postCss/Comment.css"
 
 
 
@@ -18,22 +20,26 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
 
     const [comments, setComments] = useState([]);
     const [replyVisible, setReplyVisible] = useState(null);
-  // const[updatedComments, SetUpdatedComments] = useState(comments);
+    const [editMode, setEditMode ] = useState(null);
+  
 
     useEffect(() => {
         //댓글 정보
+        
         getComment(id)
         .then((data) => {
-          console.log("------------------------",data);
+          console.log("최신 댓글 목록:", data);
+          if(data.length <=0) return;
+          data.sort((a,b)=>a.id-b.id)
           setComments(data);
         })
         .catch((error) => {
-        console.error("Error: ", error);
+        console.error("댓글 불러오기 실패:: ", error);
         });
 
     },[id, refreshTrigger]);
 
-    //답글작성
+    //답글작성 토글
     const handleReplyChange = (commentId) => {
         setReplyVisible(replyVisible === commentId ? null : commentId)
     }
@@ -55,68 +61,134 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
       )
     }
 
+     // 댓글 수정 모드 변경 
+    const handleEditToggle = (commentId) => {
+    setEditMode(editMode === commentId ? null : commentId); // 수정 모드 토글
+  };
 
-    return(
+  // 댓글 수정 완료 후 상태 갱신
+    const handleModify = (modifiedComment) => {
+    setComments((prev) =>
+      prev.map((comment) =>
+        comment.id === modifiedComment.id
+          ? { ...comment, content: modifiedComment.content }
+          : {
+              ...comment,
+              subComments: comment.subComments.map((subComment) =>
+                subComment.id === modifiedComment.id
+                  ? { ...subComment, content: modifiedComment.content }
+                  : subComment
+              ),
+            }
+    )
+    );
+      setEditMode(null); // 수정 모드 종료
+      console.log(" 수정 성공! 최신 데이터 불러오기");// 수정요함!!!!!
+      const updatedComments =  getComment(id);  // 최신 데이터 강제 호출
+      console.log("최신 댓글 목록:", updatedComments);
 
+      setComments(updatedComments); 
+      onCommentAdded();
+  };
+
+
+
+  return (
     <>
-    
-    <div className="comments-section">
-          <h3>댓글 목록</h3>
-          <ul>
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <li key={comment.id} style={{ marginLeft: `${comment.level * 20}px` }}>
-
-              <div><strong>작성자:</strong> {comment.nickname}</div>
-              <div><strong>작성일:</strong> {comment.regDate}</div>
-              <div><strong>내용:</strong> {comment.content}</div>
-
-              {comment.fileItems && comment.fileItems.length > 0 && (
-              <div>
-                <h3>첨부파일</h3>
-                {comment.fileItems.map((file) => (
-                <FileDownload key={file.id} file={file} />
-              ))}
-              </div>
-            )}
-
-            
-              {/* 답글 내용 표시 */}
-              {comment.subComments && comment.subComments.length > 0 && (
-                <ul>
-                  {comment.subComments.map((subComment) => (
-                    <li key={subComment.id} style={{ marginLeft: `${subComment.level * 20}px` }}>
-                      <div><span style={{ fontWeight: 'bold' }}>작성자 : </span>{subComment.nickname}</div>
-                      <div><span style={{ fontWeight: 'bold' }}>작성일 : </span>{subComment.regDate}</div>
-                      <div><span style={{ fontWeight: 'bold' }}>내용 : </span>{subComment.content}</div>
-                      <CommentDelete id={subComment.id} onDeleteSuccess={handleDeleteSuccess} />
-                    </li>
-                    
-                  ))}
-                </ul>
+      <div className="comments-section">
+        <h3>댓글 목록</h3>
+        <ul>
+          {comments.length > 0 ? (
+            comments.map((comment) => (
+              <li key={comment.id} className="comment-item" style={{ marginLeft: `${comment.level * 20}px` }}>
+                <div className="comment-header">
+                  <div><strong>작성자:</strong> {comment.nickname}</div>
+                  <div><strong>작성일:</strong> {comment.regDate}</div>
+                </div>
+  
+                {editMode === comment.id ? (
+                  <CommentModify 
+                    id={comment.id} 
+                    currentContent={comment.content} 
+                    fileItems={comment.fileItems} 
+                    isEditing={true} // 수정 모드 여부 전달
+                    onModified={handleModify} 
+                  />
+                ) : (
+                  <>
+                    <div className="comment-content"><strong>내용:</strong> {comment.content}</div>
+  
+                    {/* 수정 모드가 아닐 때만 파일 다운로드 버튼 표시 */}
+                    {comment.fileItems && comment.fileItems.length > 0 && editMode !== comment.id && (
+                      <div className="comment-files">
+                        {comment.fileItems.map((file) => (
+                          <FileDownload key={file.id} file={file} />
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
+  
+                {comment.subComments && comment.subComments.length > 0 && (
+                  <div className="sub-comments">
+                    <ul>
+                      {comment.subComments.map((subComment) => (
+                        <li key={subComment.id} style={{ marginLeft: `${subComment.level * 20}px` }}>
+                          <div><strong>작성자:</strong> {subComment.nickname}</div>
+                          <div><strong>작성일:</strong> {subComment.regDate}</div>
+  
+                          {editMode === subComment.id ? (
+                            <CommentModify 
+                              id={subComment.id} 
+                              currentContent={subComment.content} 
+                              fileItems={subComment.fileItems} 
+                              isEditing={true} 
+                              onModified={handleModify} 
+                            />
+                          ) : (
+                            <>
+                              <div><strong>내용:</strong> {subComment.content}</div>
+  
+                              {/* 수정 모드 아닐 때만 파일 다운로드 버튼 표시 */}
+                              {subComment.fileItems && subComment.fileItems.length > 0 && editMode !== subComment.id && (
+                                <div className="comment-files">
+                                  {subComment.fileItems.map((file) => (
+                                    <FileDownload key={file.id} file={file} />
+                                  ))}
+                                </div>
+                              )}
+                            </>
+                          )}
+  
+                          {editMode !== subComment.id && <button onClick={() => handleEditToggle(subComment.id)}>수정</button>}
+                          <CommentDelete id={subComment.id} onDeleteSuccess={handleDeleteSuccess} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+  
+                <div className="comment-actions">
+                  {editMode !== comment.id && (<button onClick={() => handleEditToggle(comment.id)}>수정</button>)}
+                  <CommentDelete id={comment.id} hasReplies={comment.subComments.length > 0} onDeleteSuccess={handleDeleteSuccess} />
+                </div>
+  
+                <div className="reply-actions">
+                  <button onClick={() => handleReplyChange(comment.id)}>답글 달기</button>
+                  {replyVisible === comment.id && (
+                    <SubCommentForm id={id} parentId={comment.id} onCommentAdded={handleReplyAdded} />
                   )}
-
-              {/* 댓글삭제 */}
-              <CommentDelete id={comment.id} hasReplies={comment.subComments.length > 0} onDeleteSuccess={handleDeleteSuccess} />
-
-
-            {/* 답글 버튼 */}
-            <button onClick={() => handleReplyChange(comment.id)}>답글 달기</button>
-            {replyVisible === comment.id && (
-                <SubCommentForm id={id} parentId={comment.id} onCommentAdded={handleReplyAdded} />
-              )}
-
-                </li>
-              ))
-            ) : (
-              <p>댓글이 없습니다.</p> 
-            )}
-          </ul>
-        
-          </div>
-
+                </div>
+              </li>
+            ))
+          ) : (
+            <p>댓글이 없습니다.</p>
+          )}
+        </ul>
+      </div>
     </>
-)
+  );
+  
 }
     export default CommentList;
 

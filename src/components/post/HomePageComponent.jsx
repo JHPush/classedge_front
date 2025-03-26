@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getPostBoard } from "../../api/postApi/postApi";
 import { usePageHooks } from "../../hooks/pageHooks";
+import { useSelector } from "react-redux";
 
 
 const initialState = {
@@ -14,9 +15,10 @@ const HomePageComponent = () => {
     const [searchParams] = useSearchParams();
     const [post, setPost] = useState({ ...initialState });
     const { moveToList, moveToView, page, size } = usePageHooks();
+    const isLogin = useSelector(state=>state.loginSlicer.id)
 
     useEffect(() => {
-
+        if(isLogin == "") return;
         getPostBoard(5)
             .then(data => {
                 console.log('data : ', data);

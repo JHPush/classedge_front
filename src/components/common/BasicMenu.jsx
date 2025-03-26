@@ -6,6 +6,7 @@ const BasicMenu = () => {
   const member = getCookie('member')
 
   return (
+    member != null?
     <nav className="bg-white shadow-md p-4 flex justify-between items-center">
 
       {/* 왼쪽 메뉴 */}
@@ -31,6 +32,7 @@ const BasicMenu = () => {
       </div>
 
     </nav>
+    :<></>
   );
 }
 

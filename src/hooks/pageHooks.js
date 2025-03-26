@@ -92,6 +92,9 @@ export const usePageHooks = () =>  {
         navigate({pathname: `../view/${id}`, search: queryDefault});
     }
 
+    // moveToBoard = (pageParam) => {
+
+    // }
     return { moveToList, moveToView, page, size };
 
 }
