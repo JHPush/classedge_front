@@ -18,8 +18,29 @@ export const getComment = async (id) => {
 }
 
 //댓글등록
-export const postComment = async (comment) => {
-    const res = await jwtAxios.post(`${prefix}/comments/register`, comment)
+export const postComment = async(comment, files) =>{
+
+    const formData = new FormData();
+
+    // Blob을 사용하여 JSON 데이터를 추가해야 함
+    const jsonBlob = new Blob([JSON.stringify(comment)], { type: 'application/json' });
+    formData.append('commentDto', jsonBlob);  // postDto를 Blob으로 변환 후 추가
+
+    // 파일 추가
+    const fileArr = [...files]
+    if(fileArr.length >0)
+    fileArr.forEach((file) => {
+        formData.append('files', file);
+    });
+
+    // 요청 보내기
+    const res = await jwtAxios.post(`${prefix}/comments/register`, formData, {
+        headers: {
+            // 'Content-Type'을 지정하지 않음 (자동 설정)
+        }}
+    )
+
+
     return res.data;
 }
 
@@ -55,6 +76,12 @@ export const deletePost = async (id) => {
     return res.data
 }
 
+//게시글수정
+export const putPost =async(post) =>{
+    const res = await jwtAxios.put(`${prefix}/posts/${post.id}`, post)
+    return res.data
+}
+
 
 //댓글삭제
 export const deleteComment = async (id) => {
@@ -63,10 +90,10 @@ export const deleteComment = async (id) => {
 }
 
 //댓글수정
-// export const putComment =async(comment) =>{
-//     const res = await jwtAxios.put(`${prefix}/comments/${id}`,{content: content})
-//     return res.data
-// }
+export const putComment =async(comment) =>{
+    const res = await jwtAxios.put(`${prefix}/comments/${comment.id}`, comment)
+    return res.data
+}
 
 
 //파일다운로드
@@ -125,7 +152,8 @@ export const getPosts = async (pageParam) => { // { page: 1, size: 10, keyfield:
 
 
 //파일 삭제
-export const deleteFile = async (id) => {
-    const res = await jwtAxios.delete(`${prefix}/files/${id}`)
+export const deleteFile = async(id) =>{
+    const res = await jwtAxios.delete(`${prefix}/files/delete/${id}`)
+    console.log('Deleting file at: ', `/${prefix}/files/delete/${id}`);
     return res.data
 }

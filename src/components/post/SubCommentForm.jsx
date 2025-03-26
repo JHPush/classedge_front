@@ -5,6 +5,7 @@ import { postComment } from "../../api/postApi/postApi";
 const SubCommentForm = ({id, parentId, onCommentAdded}) => {
 
     const [content, setContent] = useState('');
+     const [files, setFiles] = useState([]);
  
     
      //댓글작성
@@ -22,7 +23,7 @@ const SubCommentForm = ({id, parentId, onCommentAdded}) => {
                 const newComment = { content, postId: id, parent: parentId}
                 console.log("newComment: ", newComment);
                 console.log("parentid:",parentId )
-                postComment(newComment)
+                postComment(newComment,files)
                   .then(() =>{
                     
                     setContent('');

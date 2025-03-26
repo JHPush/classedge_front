@@ -59,6 +59,7 @@ const PostPageComponent = () => {
         .then(data => {
           console.log('data : ', data);
           setServerData(data);
+          
         })
         .catch(error => {
           console.error('Error : ', error);

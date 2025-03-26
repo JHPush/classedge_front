@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React,{ useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { getPost } from "../../api/postApi/postApi";
 import FileDownload from "./FileDownload";
 import "./postCss/PostView.css"
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
-import SubCommentForm from "./SubCommentForm";
+import PostDelete from "./PostDelete";
 
 
 
@@ -23,39 +23,43 @@ const initialState = {
 
 const PostView = () => {
 
-  const { id } = useParams();
-  const [post, setPost] = useState({ ...initialState })
-  const [commentRefreshToggle, setCommentRefreshToggle] = useState(false)
+    const {id} = useParams();
+    const [post, setPost] = useState({...initialState})
+    const navigate = useNavigate(); 
+    const [commentRefreshToggle, setCommentRefreshToggle] = useState(false)
 
-  const refreshComments = () => {
-    setCommentRefreshToggle(prev => !prev);
-  }
-
-
-
-  useEffect(() => {
-    console.log("게시글정보");
-    //게시글 정보
-    getPost(id)
-      .then(data => {
-        console.log("Received post data:", data);
-        setPost(data);
-
-      })
-      .catch(error => {
-        console.error("Error: ", error);
-      })
-
-    console.log("댓글목록");
+    const refreshComments = () =>{
+      setCommentRefreshToggle(prev => !prev);
+    }
+ 
 
 
+    useEffect(() => {
+      console.log("게시글정보");
+        //게시글 정보
+        getPost(id)
+            .then(data => { 
+              console.log("Received post data:", data);
+                setPost(data);
+                
+            })
+            .catch(error =>{
+                console.error("Error: ", error);
+            })
+   
+      console.log("댓글목록");
+      
+        
 
-  }, [id]);
+    },[id]);
 
-
-  return (
-    <>
-      <div className="max-w-2xl mx-auto bg-white p-6 shadow-md rounded-lg">
+    const handleModifyClick = () =>{
+      navigate(`/modify/${id}`);
+    }
+ 
+    return (
+      <>
+        <div className="max-w-2xl mx-auto bg-white p-6 shadow-md rounded-lg">
             {/* 제목 */}
             <h1 className="text-2xl font-bold text-gray-700 mb-4">{post.title}</h1>
             
@@ -93,19 +97,24 @@ const PostView = () => {
             
             {/* 버튼 */}
             <div className="flex justify-end mt-6 space-x-2">
-                <button className="bg-gray-400 text-white px-3 py-1 rounded-lg hover:bg-gray-500 transition">
+                <button onClick={handleModifyClick} className="bg-gray-400 text-white px-3 py-1 rounded-lg hover:bg-gray-500 transition">
                     수정
                 </button>
-                <button className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition">
+                <PostDelete id={id} boardName={post.boardName} />
+                {/* <button className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition">
                     삭제
-                </button>
+                </button> */}
             </div>
         </div>
-      <CommentList id={id} refreshTrigger={commentRefreshToggle} onCommentAdded={refreshComments} />
-      <CommentForm id={id} onCommentAdded={refreshComments} />
-
-    </>
-
-  );
+    
+        <div className="comment-section">
+          <h3 className="comments-header">댓글 목록</h3>
+          <CommentList id={id} refreshTrigger={commentRefreshToggle} onCommentAdded={refreshComments} />
+          <div className="comment-form-container">
+            <CommentForm id={id} onCommentAdded={refreshComments} />
+          </div>
+        </div>
+      </>
+    );
 }
 export default PostView;
