@@ -6,9 +6,12 @@ import { getOriginNotifications, updateReadNotifications } from "../../api/membe
 import { Link } from "react-router-dom";
 
 const NotificationItem = ({ name, content, date, postId }) => {
+    const convertMessage = ()=>{
+        return content === "NOTICE"? content= "공지" : content==="TASK"? content="과제" : content="댓글"
+    }
     return (
         <div style={{ border: "1px solid #ddd", padding: "10px", margin: "5px 0" }}>
-            <p>{name + "님이" + content + "를 작성하였습니다."}</p>
+            <p>{name + "님이＂" + convertMessage() + "＂를 작성하였습니다."}</p>
             <p>{date}</p>
             <Link to={`/view/${postId}`}>
                 <button className="text-blue-500">자세히 보기</button>

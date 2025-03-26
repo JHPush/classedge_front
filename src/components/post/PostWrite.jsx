@@ -41,6 +41,7 @@ const Postwrite = () => {
                         setPostId(data.id)
                         setPost({ ...initialState });
                         console.log("postid:", data.id);
+                        navigate('/task', {state: `${post.boardName}`})
 
                     })
                     .catch(error => {
