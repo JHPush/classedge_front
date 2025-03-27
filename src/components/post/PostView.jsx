@@ -83,19 +83,21 @@ const PostView = () => {
                 {post.contents || <span className="text-gray-400">내용이 없습니다.</span>}
             </div>
             
-            {/* 첨부 파일 */}
-            {post.files && post.files.length > 0 && (
-                <div className="mt-6 p-4 bg-gray-100 rounded-md">
-                    <h3 className="text-gray-600 font-semibold mb-2">📎 첨부 파일</h3>
-                    <ul className="text-blue-500 text-sm">
-                        {post.files.map((file, index) => (
-                            <li key={index}>
-                                <a href={file.url} target="_blank" rel="noopener noreferrer" className="hover:underline">{file.name}</a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+           {/* 첨부 파일 */}
+          {post.fileItems && post.fileItems.length > 0 && (
+            <div className="mt-6 p-4 bg-gray-100 rounded-md">
+              <h3 className="text-gray-600 font-semibold mb-2">📁 첨부 파일</h3>
+              <ul className="file-items-list">
+                {post.fileItems.map((file) => (
+                  <li key={file.id} className="file-item mb-2">
+                    <FileDownload file={file} isPost={true} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+
             
             {/* 버튼 */}
             {post.nickname === nickname? <div className="flex justify-end mt-6 space-x-2">

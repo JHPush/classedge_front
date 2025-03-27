@@ -22,6 +22,7 @@ const SubCommentForm = ({id, parentId, onCommentAdded}) => {
               if(window.confirm("답글을 등록하시겠습니까?")){
                 const newComment = { content, postId: id, parent: parentId}
                 console.log("newComment: ", newComment);
+                console.log("postid: ", id);
                 console.log("parentid:",parentId )
                 postComment(newComment,files)
                   .then(() =>{
@@ -42,15 +43,29 @@ const SubCommentForm = ({id, parentId, onCommentAdded}) => {
 
     return (
         <>
-        
-        <div className="form-container">
-            <div className="form-group-horizontal">
-                <input type="text" name="content" placeholder="답글을 입력하세요." value={content} onChange={(handleChange)} />
-            </div>
-            <div>
-                <button type="button" onClick={(handleReplyClick)} >등록</button>
-            </div>  
-        </div>
+      <div className="form-container">
+  <div className="form-group-horizontal">
+    <input
+      type="text"
+      name="content"
+      placeholder="답글을 입력하세요."
+      value={content}
+      onChange={handleChange}
+      className="comment-input"
+    />
+  </div>
+
+  <div className="submit-button-group">
+    <button
+      type="button"
+      onClick={handleReplyClick}
+      className="submit-button"
+    >
+      등록
+    </button>
+  </div>
+</div>
+
         </>
     )
 }

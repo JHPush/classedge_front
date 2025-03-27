@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { postComment } from "../../api/postApi/postApi";
-import FileUpload from "./FileUpload";
+import "./postCss/Comment.css"
 
 
 const CommentForm = ({ id, onCommentAdded }) => {
@@ -8,18 +8,48 @@ const CommentForm = ({ id, onCommentAdded }) => {
   const [content, setContent] = useState('');
   const [files, setFiles] = useState([]);
   const fileInputRef = useRef(null);
+  const MAX_FILE_SIZE = 3 * 1024 * 1024; // 개당 3MB
+  const MAX_TOTAL_SIZE = 10 * 1024 * 1024; // 전체 총합 10MB
 
 
   const handleFileChange = (e) => {
     const selectedFiles = e.target.files;
-    setFiles(selectedFiles);
-    console.log(selectedFiles);
+    let totalSize = 0;
+    let invalidFiles = [];
 
-  }
+      // 파일 크기 체크
+      Array.from(selectedFiles).forEach(file => {
+          if (file.size > MAX_FILE_SIZE) {
+              invalidFiles.push(file);
+          } else {
+              totalSize += file.size;
+          }
+      });
+
+      // 개별 파일 크기 초과 확인
+      if (invalidFiles.length > 0) {
+          alert(`파일 크기가 너무 큽니다. 개별 파일 크기는 최대 3MB입니다.`);
+          setFiles([]); // 상태 초기화
+      }
+      // 전체 파일 크기 초과 확인
+      else if (totalSize > MAX_TOTAL_SIZE) {
+          alert(`파일 크기 총합이 10MB를 초과할 수 없습니다.`);
+          setFiles([]); // 상태 초기화
+      } else {
+          setFiles(selectedFiles); // 모든 조건을 만족하면 파일 상태 업데이트
+      }
+
+      console.log(selectedFiles);
+
+    }
+
+
+
   //댓글작성
   const handleChange = (e) => {
     setContent(e.target.value)
   }
+
 
   //댓글작성
   const handleClick = (e) => {
@@ -31,7 +61,8 @@ const CommentForm = ({ id, onCommentAdded }) => {
       if (window.confirm("댓글을 등록하시겠습니까?")) {
 
         const newComment = { content, postId: id }
-        console.log("newComment: ", newComment);
+        console.log("postid: ", newComment.postId);
+        console.log("newComment: ", newComment.id);
 
         postComment(newComment, files).then((data) => {
           console.log("sss : " + data.id);
@@ -58,39 +89,39 @@ const CommentForm = ({ id, onCommentAdded }) => {
 
   return (
     <>
+   {/* 댓글 입력 및 파일 업로드 부분 */}
+<div className="form-container">
+  <div className="form-group">
+    <textarea
+      name="content"
+      placeholder="댓글을 입력하세요."
+      value={content}
+      onChange={handleChange}
+      className="comment-input"
+    />
+  </div>
 
-      {/* 댓글 입력 및 파일 업로드 부분 */}
-      <div className="form-container">
-        <div className="form-group">
-          <input
-            type="text"
-            name="content"
-            placeholder="댓글을 입력하세요."
-            value={content}
-            onChange={handleChange}
-            className="comment-input"
-          />
-        </div>
-        <div className="file-upload-group">
+  <div className="file-upload-group">
+    <input
+      type="file"
+      id="file-upload"
+      className="file-input"
+      ref={fileInputRef}
+      onChange={handleFileChange}
+      multiple
+    />
+  </div>
 
-          <input
-            type="file"
-            id="file-upload"
-            className="file-input"
-            ref={fileInputRef}
-            onChange={handleFileChange} multiple
-          />
-        </div>
-        <div className="submit-button-group">
-          <button
-            type="button"
-            onClick={handleClick}
-            className="submit-button"
-          >
-            댓글 입력
-          </button>
-        </div>
-      </div>
+  <div className="submit-button-group">
+    <button
+      type="button"
+      onClick={handleClick}
+      className="submit-button"
+    >
+    댓글 등록
+    </button>
+  </div>
+</div>
 
 
     </>

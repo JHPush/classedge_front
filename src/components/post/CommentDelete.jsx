@@ -27,8 +27,11 @@ const CommentDelete =({id, hasReplies, onDeleteSuccess})=>{
 
     return(
         <>
-        <button onClick={handleDelete}>삭제</button>
-        </>
+        <button
+          onClick={handleDelete}
+          className="delete-button"
+        >삭제</button>
+      </>
     )
 }
 export default CommentDelete;

@@ -41,7 +41,7 @@ export const postComment = async(comment, files) =>{
     )
 
 
-    return res.data;
+    return res;
 }
 
 

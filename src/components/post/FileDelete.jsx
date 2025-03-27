@@ -19,11 +19,12 @@ const FileDelete =({id, onFileDeleted})=>{
         }
     }
 
-    return(
-        <>
-        <button onClick={handleDelete}>파일삭제</button>
-        </>
-    )
+    return (
+        <button onClick={handleDelete} className="file-delete-btn">
+          파일 삭제
+        </button>
+      );
+      
 
 }
 export default FileDelete;

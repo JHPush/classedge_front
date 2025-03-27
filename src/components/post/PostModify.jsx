@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getPost, putPost } from "../../api/postApi/postApi";
 import FileDelete from "./FileDelete";
 import { useNavigate, useParams } from "react-router-dom";
+import FileDownload from "./FileDownload";
 
 const initialState ={
     id: '',
@@ -83,48 +84,61 @@ const PostModify = () => {
 
     return(
     <>
-            <div className="form-container">
+            <div className="max-w-2xl mx-auto bg-white p-6 shadow-md rounded-lg">
+        {/* 제목 */}
+        <h1 className="text-2xl font-bold text-gray-700 mb-6">📝 게시글 수정</h1>
 
-        <h1 className="form-title">게시글 수정</h1>
-
-        <div className="form-group-horizontal">
-            <label htmlFor="boardName">카테고리</label>
-            <select name="boardName" value={post.boardName} onChange={handleChange}>
-                <option value={"NOTICE"}>공지사항</option>
-                <option value={"TASK"}>과제</option>
+        {/* 카테고리 선택 */}
+        <div className="flex items-center space-x-4 mb-4">
+            <label className="font-semibold text-gray-600" htmlFor="boardName">카테고리</label>
+            <select name="boardName" value={post.boardName} onChange={handleChange} className="p-2 border rounded-md">
+                <option value="NOTICE">공지사항</option>
+                <option value="TASK">과제</option>
             </select>
-        {/* 과제 카테고리 lmiDate */}
+        </div>
+
+        {/* 과제 마감일 (과제 선택 시만 보임) */}
         {post.boardName === 'TASK' && (
-        <div className="form-group-horizontal">
-            <label htmlFor="lmiDate">과제 마감일</label>
-            <input
-            type="datetime-local" name="lmiDate" value={post.lmiDate} onChange={handleChange}/>
-        </div>
-        )}
-        </div>
-
-
-        <div className="form-group-horizontal">
-            <label htmlFor="title">제목</label>
-            <input type="text" name="title" placeholder="제목을 입력하세요." value={post.title} onChange={handleChange} />
-        </div>
-        <div className="form-group-horizontal">
-            <label htmlFor="contents">내용</label>
-            <textarea name="contents" placeholder="내용을 입력하세요." value={post.contents} onChange={handleChange} ></textarea>
-        </div>
-        <div className="form-actions">
-        <button type="button" onClick={(handleSubmit)} >수정완료</button>
-        </div>   
-        {post.fileItems && post.fileItems.length > 0 && (
-        <div>
-          {post.fileItems.map((file) => (
-            <div key={file.id}> <span>{file.fileName}</span>
-              <FileDelete id={file.id} onFileDeleted={handleFileDeleted} />
+            <div className="flex items-center space-x-4 mb-4">
+                <label className="font-semibold text-gray-600" htmlFor="lmiDate">📅 과제 마감일</label>
+                <input type="datetime-local" name="lmiDate" value={post.lmiDate} onChange={handleChange} className="p-2 border rounded-md" />
             </div>
-          ))}
+        )}
+
+        {/* 제목 입력 */}
+        <div className="mb-4">
+            <label className="font-semibold text-gray-600 block mb-1" htmlFor="title">제목</label>
+            <input type="text" name="title" placeholder="제목을 입력하세요." value={post.title} onChange={handleChange} className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-300" />
         </div>
-      )}
+
+        {/* 내용 입력 */}
+        <div className="mb-4">
+            <label className="font-semibold text-gray-600 block mb-1" htmlFor="contents">내용</label>
+            <textarea name="contents" placeholder="내용을 입력하세요." value={post.contents} onChange={handleChange} className="w-full p-2 border rounded-md h-96 resize-none overflow-auto focus:ring-2 focus:ring-blue-300"></textarea>
         </div>
+
+        {/* 파일 목록 */}
+        {post.fileItems && post.fileItems.length > 0 && (
+            <div className="mb-4 bg-gray-100 p-4 rounded-md">
+                <h2 className="text-gray-700 font-semibold mb-2">📂 첨부 파일</h2>
+                {post.fileItems.map((file) => (
+                    <div key={file.id} className="flex items-center justify-between bg-white p-2 rounded-md shadow-sm mb-2">
+                         <FileDownload file={file} />
+                        {/* <span className="text-gray-600">{file.fileName}</span> */}
+                        <FileDelete id={file.id} onFileDeleted={handleFileDeleted} />
+                    </div>
+                ))}
+            </div>
+        )}
+
+        {/* 수정 완료 버튼 */}
+        <div className="flex justify-end">
+            <button type="button" onClick={handleSubmit} className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+                수정완료
+            </button>
+        </div>
+    </div>
+
     </>
     )
 }
