@@ -43,24 +43,19 @@ const CommentModify = ({id, currentContent , onModified, fileItems, isEditing, o
     return(
       <>
       <div className="form-container">
+      <div className="form-container">
         <div className="form-group">
-          <label htmlFor="content">내용</label>
+          <label htmlFor="content" className="font-semibold text-gray-600 mb-2 block">수정 내용</label> {/* 폰트와 간격 추가 */}
           <textarea 
             name="content" 
             value={content} 
             onChange={handleChangeContent} 
-            className="comment-input"
+            className="comment-input mt-2 mb-4 p-2 border rounded-md focus:ring-2 focus:ring-blue-300"
           />
         </div>
-        <div className="form-actions submit-button-group">
-          <button 
-            type="button" 
-            onClick={handleClickModify} 
-            className="submit-button"
-          >
-            수정 완료
-          </button>
-        </div>
+      </div>
+
+      
         
         {isEditing && fileItems && fileItems.length > 0 && (
           <div className="file-edit-container">
@@ -72,6 +67,16 @@ const CommentModify = ({id, currentContent , onModified, fileItems, isEditing, o
             ))}
           </div>
         )}
+
+      <div className="form-actions submit-button-group">
+          <button 
+            type="button" 
+            onClick={handleClickModify} 
+            className="submit-button"
+          >
+            수정 완료
+          </button>
+        </div>
       </div>
     </>
     

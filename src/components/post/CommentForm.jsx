@@ -28,15 +28,21 @@ const CommentForm = ({ id, onCommentAdded }) => {
 
       // 개별 파일 크기 초과 확인
       if (invalidFiles.length > 0) {
-          alert(`파일 크기가 너무 큽니다. 개별 파일 크기는 최대 3MB입니다.`);
-          setFiles([]); // 상태 초기화
+          alert(`파일용량이 너무 큽니다. 3MB 이하의 파일을 첨부해주세요`);
+          setFiles([]); 
+          if (fileInputRef.current) {
+            fileInputRef.current.value = ''; 
+          }
       }
       // 전체 파일 크기 초과 확인
       else if (totalSize > MAX_TOTAL_SIZE) {
           alert(`파일 크기 총합이 10MB를 초과할 수 없습니다.`);
-          setFiles([]); // 상태 초기화
+          setFiles([]); 
+          if (fileInputRef.current) {
+            fileInputRef.current.value = ''; 
+          }
       } else {
-          setFiles(selectedFiles); // 모든 조건을 만족하면 파일 상태 업데이트
+          setFiles(selectedFiles);
       }
 
       console.log(selectedFiles);

@@ -131,12 +131,13 @@ const PostModify = () => {
             </div>
         )}
 
-        {/* 수정 완료 버튼 */}
-        <div className="flex justify-end">
-            <button type="button" onClick={handleSubmit} className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+      {/* 수정 완료 버튼 */}
+        <div className="flex justify-end mt-6 space-x-2">
+            <button type="button" onClick={handleSubmit} className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition">
                 수정완료
             </button>
         </div>
+
     </div>
 
     </>

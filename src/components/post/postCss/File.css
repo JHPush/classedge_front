@@ -58,7 +58,7 @@
 .comment-file {
   display: flex;
   align-items: center;
-  padding: 8px;
+  padding: 15px;
   background-color: #fff;
   border-radius: 0.375rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -116,22 +116,24 @@
   background-color: #fff;
   border-radius: 0.375rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  justify-content: space-between;  /* 파일명과 삭제 버튼을 양옆으로 배치 */
+  justify-content: flex-end;  /* 파일명과 삭제 버튼을 양옆으로 배치 */
+ 
 }
 
 /* 댓글에서 파일 삭제 버튼의 위치 */
 .comment-file-btn{
-  margin-left: 680px;  /* 좌측 간격 */
-  margin-top: 5px;   /* 상단 간격 추가 */
-  margin-bottom: 10px; /* 하단 간격 추가 */
+  margin-left: 5px;  /* 좌측 간격 */
+  margin-top: 10px;   /* 상단 간격 추가 */
+  margin-bottom: 15px; /* 하단 간격 추가 */
   order: 1;  /* 요소의 표시 순서 조정 */
+  justify-content: flex-end;
 }
 
 /* 호버 효과 */
-.file-delete-btn:hover {
-  background-color: #fbd5d5;  /* 마우스 오버 시 색상 변경 */
-  color: #e53e3e;  /* 텍스트 색상은 그대로 */
-}
+.file-delete-btn:hover { 
+   background-color: #fbd5d5;  /* 마우스 오버 시 색상 변경 */
+   color: #e53e3e;  /*텍스트 색상은 그대로 */ 
+ }
 
 /* 반응형 스타일: 작은 화면에서 버튼 크기 조정 (선택적) */
 @media (max-width: 768px) {

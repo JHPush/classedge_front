@@ -104,24 +104,6 @@ export const downloadFile = async (id) => {
 }
 
 
-//파일업로드
-export const uploadFile = async (files, postId, commentId) => {
-
-    const formData = new FormData();
-
-    Array.from(files).forEach((file) => { formData.append('files', file); })
-    if (postId !== null) {
-        formData.append('postId', postId);
-    }
-    //게시글 작성시 commentid가 null인 경우 방지 
-    if (commentId !== null) {
-        formData.append('commentId', commentId);
-    }
-
-    const res = await jwtAxios.post(`${prefix}/files/upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-    return res.data;
-}
-
 // 게시글 상세조회
 export const getPost = async (id) => {
     const res = await jwtAxios.get(`${prefix}/posts/${id}`)
@@ -129,12 +111,6 @@ export const getPost = async (id) => {
     return res.data;
 }
 
-// 게시글 등록
-export const postPost = async (post) => {
-    const res = await jwtAxios.post(`${prefix}/posts`, post);
-    console.log("res : ", res);
-    return res.data;
-}
 
 // 게시글 목록 조회
 export const getPosts = async (pageParam) => { // { page: 1, size: 10, keyfield: 'title', keyword: '제목' }

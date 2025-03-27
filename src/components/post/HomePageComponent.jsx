@@ -15,10 +15,10 @@ const HomePageComponent = () => {
     const [searchParams] = useSearchParams();
     const [post, setPost] = useState({ ...initialState });
     const { moveToList, moveToView, page, size } = usePageHooks();
-    const isLogin = useSelector(state=>state.loginSlicer.id);
+    const isLogin = useSelector(state => state.loginSlicer.id);
 
     useEffect(() => {
-        if(isLogin == "") return;
+        if (isLogin == "") return;
         getPostBoard(5)
             .then(data => {
                 console.log('data : ', data);
@@ -39,7 +39,8 @@ const HomePageComponent = () => {
                         {post.notice.map((notice, index) => (
                             <div key={index} className="bg-gray-50 p-4 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer" onClick={() => moveToView(notice.id)}>
                                 <h3 className="text-lg font-semibold text-blue-600">{notice.title}</h3>
-                                <p className="text-sm text-gray-500">{notice.regDate}</p>
+                                <p className="text-m font-semibold text-gray-700">{notice.nickname}</p>
+                                <p className="text-sm text-gray-500">{notice.regDate.split('.')[0].replace('T', ' ')}</p>
                             </div>
                         ))}
                     </div>
@@ -52,7 +53,8 @@ const HomePageComponent = () => {
                         {post.task.map((task, index) => (
                             <div key={index} className="bg-gray-50 p-4 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer" onClick={() => moveToView(task.id)}>
                                 <h3 className="text-lg font-semibold text-green-600">{task.title}</h3>
-                                <p className="text-sm text-gray-500">{task.regDate}</p>
+                                <p className="text-m font-semibold text-gray-700">{task.nickname}</p>
+                                <p className="text-sm text-gray-500">{task.regDate.split('.')[0].replace('T', ' ')}</p>
                             </div>
                         ))}
                     </div>

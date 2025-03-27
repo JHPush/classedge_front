@@ -1,21 +1,39 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { registerPost } from '../../api/postApi/postApi';
-import { useNavigate } from 'react-router-dom';  // 페이지 리디렉션을 위한 useNavigate
+import { useLocation, useNavigate } from 'react-router-dom';  // 페이지 리디렉션을 위한 useNavigate
 
-
-const initialState = {
-    title: '',
-    nickname: '',
-    contents: '',
-    boardName: 'NOTICE',
-    lmiDate: ''
-}
 
 const Postwrite = () => {
-    const [post, setPost] = useState({ ...initialState });
+
+    const location = useLocation();
+    const initialCategory = location.state?.loc || "NOTICE";
+    console.log("state", initialCategory);
+
+    const initialState = {
+        title: '',
+        nickname: '',
+        contents: '',
+        boardName: 'NOTICE',
+        lmiDate: ''
+    }
+
+    const [post, setPost] = useState({
+        title: '',
+        nickname: '',
+        contents: '',
+        boardName: 'NOTICE',
+        lmiDate: ''
+    });
+
     const [postId, setPostId] = useState(null);
     const navigate = useNavigate();  // 페이지 이동을 위한 hook
     const [files, setFiles] = useState([]);
+    const fileInputRef = useRef(null);
+
+    // initialCategory가 변경될 때 실행
+    useEffect(() => {
+        setPost((prev) => ({ ...prev, boardName: initialCategory }));
+    }, [initialCategory]);  
 
 
     const handleChange = (e) => {
@@ -70,13 +88,19 @@ const Postwrite = () => {
 
         // 개별 파일 크기 초과 확인
         if (invalidFiles.length > 0) {
-            alert(`파일 크기가 너무 큽니다. 개별 파일 크기는 최대 3MB입니다.`);
+            alert(`첨부한 파일용량이 너무 큽니다. 3MB 이하의 파일을 첨부해주세요`);
             setFiles([]); 
+            if (fileInputRef.current) {
+                fileInputRef.current.value = ''; 
+              }
         }
         // 전체 파일 크기 초과 확인
         else if (totalSize > MAX_TOTAL_SIZE) {
             alert(`파일 크기 총합이 10MB를 초과할 수 없습니다.`);
             setFiles([]); 
+            if (fileInputRef.current) {
+                fileInputRef.current.value = ''; 
+              }
         } else {
             setFiles(selectedFiles); 
         }
@@ -132,6 +156,7 @@ const Postwrite = () => {
                     type="file" 
                     onChange={handleFileChange} 
                     multiple 
+                    ref={fileInputRef}
                     className="p-2 border rounded-md" 
                     style={{
                         width: '100%',
