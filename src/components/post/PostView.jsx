@@ -23,7 +23,7 @@ const initialState = {
 
 
 const PostView = () => {
-  const nickname = useSelector(state => state.loginSlicer.nickname);
+  const nickname = useSelector(state => state.loginSlicer.initState.nickname);
 
     const {id} = useParams();
     const [post, setPost] = useState({...initialState})
