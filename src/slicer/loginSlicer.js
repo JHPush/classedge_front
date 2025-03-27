@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { getCookie, removeCookie, setCookie } from "../utils/cookieUtils";
-import { postLogin } from "../api/memberApi/security";
+import { postLogin, postKakaoLogin } from "../api/memberApi/security";
 
 const initState = {
     id: "",
@@ -17,6 +17,17 @@ export const loginPostAsync = createAsyncThunk('loginSlicer/loginPostAsync', asy
     return res; // Promise 객체 리턴
 })
 
+// 카카오 로그인 처리
+export const kakaoLoginPostAsync = createAsyncThunk('loginSlicer/kakaoLoginPostAsync', async (code) => {
+    const res = await postKakaoLogin(code); // 백엔드로 카카오 인가 코드 전송
+
+    if(res.isNewUser) {
+        return {isNewUser: true, kakaoNickname: res.nickname}
+    }
+
+    return res;
+});
+
 const cookie = getCookie('member');
 
 const loginSlicer = createSlice({
@@ -25,6 +36,13 @@ const loginSlicer = createSlice({
     reducers: {
         login: (state, action) => { // state : 현재 상태 정보 / action - 전달받은 액션 객체
             return { initState: action.payload };
+        },
+        kakaoLogin: (state, action) => {
+            console.log('login reducer..')
+            console.log('action : ', action)
+            console.log('action.payload : ', action.payload)
+
+            return { initState: action.payload};
         },
         logout: () => {
             removeCookie('member')
@@ -36,17 +54,27 @@ const loginSlicer = createSlice({
             .addCase(loginPostAsync.pending, (state, action) => {
                 console.log('extra reduce loginPostAsync.pending...');
             })
+            .addCase(kakaoLoginPostAsync.pending, (state, action) => {
+                console.log('extra reduce kakaoLoginPostAsync.pending...');
+            })
             .addCase(loginPostAsync.fulfilled, (state, action) => {
                 console.log('extra reduce loginPostAsync.fulfilled...');
                 console.log('fulfilled payload', action.payload);
 
                 if(!action.payload.error)
-                setCookie('member', JSON.stringify(action.payload), 1)
+                    setCookie('member', JSON.stringify(action.payload), 1);
 
+                return { initState: action.payload };
+            })
+            .addCase(kakaoLoginPostAsync.fulfilled, (state, action) => {
+                if (!action.payload.error) setCookie('member', JSON.stringify(action.payload), 1);
                 return { initState: action.payload };
             })
             .addCase(loginPostAsync.rejected, (state, action) => {
                 console.log('extra reduce loginPostAsync.rejected...');
+            })
+            .addCase(kakaoLoginPostAsync.rejected, (state, action) => {
+                console.log('extra reduce kakaoLoginPostAsync.rejected...');
             })
     }
 })

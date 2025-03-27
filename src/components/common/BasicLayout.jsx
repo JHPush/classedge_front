@@ -11,7 +11,7 @@ const BasicLayout = ({ children }) => {
 
   // 로그인 정보 없으면 로그인 페이지로
   useEffect(()=>{
-    console.log(member)
+    console.log("member : " ,member)
     if (!member)
       navi('/login', { replace: true });
   },[])

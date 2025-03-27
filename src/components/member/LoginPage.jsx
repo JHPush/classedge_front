@@ -3,11 +3,14 @@ import "./memberCss/LoginPage.css"; // 스타일을 별도로 관리합니다.
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginPostAsync } from "../../slicer/loginSlicer";
+
 const initForm = {
     id: '',
     password: ''
 }
+
 const LoginPage = () => {
+
     const [loginform, setLoginForm] = useState({ ...initForm });
 
     const navi = useNavigate()
@@ -16,6 +19,7 @@ const LoginPage = () => {
     const handleOnChange = (e) => {
         setLoginForm({ ...loginform, [e.target.name]: e.target.value })
     }
+
     const handleOnLogin = (e) => {
         dispatch(loginPostAsync(loginform))
             .unwrap() // 비동기 작업 결과를 Promise 형태로 변환
@@ -28,6 +32,11 @@ const LoginPage = () => {
                 console.log('request error : ', e)
             })
     }
+
+    const handleKakaoLogin = () => {
+        
+        window.location.href = "https://kauth.kakao.com/oauth/authorize?client_id=0dfc6bf7b966b2bdfe198d82fc657170&redirect_uri=http://localhost:3000/oauth/kakao&response_type=code"
+    };
 
     return (
         <div className="parent-container">
@@ -55,7 +64,7 @@ const LoginPage = () => {
                         로그인
                     </button>
                 </form>
-                <button className="kakao-login-button">
+                <button className="kakao-login-button" onClick={handleKakaoLogin}>
                     카카오 계정으로 로그인
                 </button>
                 <a href="/signup" className="signup-link">
