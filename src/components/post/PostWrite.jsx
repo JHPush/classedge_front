@@ -1,21 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { registerPost } from '../../api/postApi/postApi';
-import { useNavigate } from 'react-router-dom';  // 페이지 리디렉션을 위한 useNavigate
+import { useLocation, useNavigate } from 'react-router-dom';  // 페이지 리디렉션을 위한 useNavigate
 
-
-const initialState = {
-    title: '',
-    nickname: '',
-    contents: '',
-    boardName: 'NOTICE',
-    lmiDate: ''
-}
 
 const Postwrite = () => {
-    const [post, setPost] = useState({ ...initialState });
+
+    const location = useLocation();
+    const initialCategory = location.state?.loc || "NOTICE";
+    console.log("state", initialCategory);
+
+    const initialState = {
+        title: '',
+        nickname: '',
+        contents: '',
+        boardName: 'NOTICE',
+        lmiDate: ''
+    }
+
+    const [post, setPost] = useState({
+        title: '',
+        nickname: '',
+        contents: '',
+        boardName: 'NOTICE',
+        lmiDate: ''
+    });
+
     const [postId, setPostId] = useState(null);
     const navigate = useNavigate();  // 페이지 이동을 위한 hook
     const [files, setFiles] = useState([]);
+
+    // initialCategory가 변경될 때 실행
+    useEffect(() => {
+        setPost((prev) => ({ ...prev, boardName: initialCategory }));
+    }, [initialCategory]);  
 
 
     const handleChange = (e) => {

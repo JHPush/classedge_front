@@ -107,7 +107,6 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
   return (
     <>
  <div className="comments-section">
-  {/* <h3 className="comments-header">댓글 목록</h3> */}
   <ul>
     {comments.length > 0 ? (
       comments.map((comment) => (

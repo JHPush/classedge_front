@@ -57,12 +57,25 @@ const PostView = () => {
             <h1 className="text-2xl font-bold text-gray-700 mb-4">{post.title}</h1>
             
             {/* 작성 정보 */}
-            <div className="text-gray-500 text-sm mb-4">
-                <span>📅 {new Date(post.createdAt).toLocaleString()}</span>
-                {post.boardName === 'TASK' && post.lmiDate && (
-                    <span className="ml-4">⏳ 마감일: {new Date(post.lmiDate).toLocaleString()}</span>
-                )}
+            <div className="text-gray-500 text-sm mb-4 flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <span className="font-semibold text-gray-700">작성자:</span>
+                <span className="text-gray-600">{post.nickname}</span>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <span className="font-semibold text-gray-700">📅</span>
+                <span className="text-gray-600">{new Date(post.regDate).toLocaleString()}</span>
+              </div>
+
+              {post.boardName === 'TASK' && post.lmiDate && (
+                <div className="flex items-center space-x-2">
+                  <span className="font-semibold text-gray-700">⏳ 마감일:</span>
+                  <span className="text-gray-600">{new Date(post.lmiDate).toLocaleString()}</span>
+                </div>
+              )}
             </div>
+
             
             {/* 카테고리 */}
             <div className="inline-block bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm font-semibold mb-4">
@@ -75,30 +88,25 @@ const PostView = () => {
             </div>
             
            {/* 첨부 파일 */}
-          {post.fileItems && post.fileItems.length > 0 && (
-            <div className="mt-6 p-4 bg-gray-100 rounded-md">
-              <h3 className="text-gray-600 font-semibold mb-2">📁 첨부 파일</h3>
-              <ul className="file-items-list">
-                {post.fileItems.map((file) => (
-                  <li key={file.id} className="file-item mb-2">
-                    <FileDownload file={file} isPost={true} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+            {post.fileItems && post.fileItems.length > 0 && (
+              <div className="mt-6 p-4 bg-gray-100 rounded-md">
+                <h3 className="text-gray-600 font-semibold mb-2">📁 첨부 파일</h3>
+                <ul className="file-items-list mt-4 mb-4"> {/* 위아래 간격 추가 */}
+                  {post.fileItems.map((file) => (
+                    <li key={file.id} className="file-item mb-2">
+                      <FileDownload file={file} isPost={true} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-
-            
             {/* 버튼 */}
             {post.nickname === nickname? <div className="flex justify-end mt-6 space-x-2">
                 <button onClick={handleModifyClick} className="bg-gray-400 text-white px-3 py-1 rounded-lg hover:bg-gray-500 transition">
                     수정
                 </button>
                 <PostDelete id={id} boardName={post.boardName} />
-                {/* <button className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition">
-                    삭제
-                </button> */}
             </div> : <></>}
             
         </div>

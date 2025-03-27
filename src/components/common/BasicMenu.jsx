@@ -10,10 +10,10 @@ const BasicMenu = () => {
   // 리덕스 상태정보 가져오기
   const member = useSelector(state => state.loginSlicer.initState)
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(member)
   }, [])
-  
+
   return (
     member != null ?
       <nav className="bg-white shadow-md p-4 flex justify-between items-center">
@@ -24,11 +24,12 @@ const BasicMenu = () => {
             className="text-lg font-semibold text-gray-700 hover:text-blue-500 transition">📢 공지사항</Link>
           <Link to={{ pathname: "/task" }} state='TASK' className="text-lg font-semibold text-gray-700 hover:text-blue-500 transition">📌 과제</Link>
         </div>
-        <div className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition cursor-pointer mr-4">
-          사용자 : {member.nickname}
-        </div>
         <div className="w-1/5 flex justify-end bg-transparent p-4 font-medium">
           <AlertPop />
+
+          <div className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition cursor-pointer mr-4 flex items-center">
+            사용자 : {member.nickname}
+          </div>
           <LogoutBtn />
         </div>
       </nav>

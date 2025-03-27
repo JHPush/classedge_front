@@ -62,7 +62,7 @@ const PostPageComponent = () => {
         .then(data => {
           console.log('data : ', data);
           setServerData(data);
-          
+          console.log("loc", loc);
         })
         .catch(error => {
           console.error('Error : ', error);
@@ -110,7 +110,11 @@ const PostPageComponent = () => {
                 <div className="text-lg font-semibold text-gray-800 flex items-center space-x-2">
                   <span className="text-blue-500">{post.title}</span>{post.fileItems.length > 0 ? <img src="imageIcon.png" className="w-3 h-3 mb-[-4px]"></img> : <></>}   <span className="text-sm text-gray-400">（{post.commentCount}）</span>
                 </div>
-                <p className="text-sm text-gray-500">{post.nickname}  {post.regDate.split('.')[0]}</p>
+                <div className="flex items-center space-x-2">
+                <p className="text-m font-semibold text-gray-700">{post.nickname}</p>
+                <p className="text-sm text-gray-500">{post.regDate.split('.')[0].replace('T', ' ')}</p>
+              </div>
+
               </div>
               {/* <span className="text-gray-600">댓글 :（{post.commentCount}）</span> */}
               <span className="text-gray-600">#{((page - 1) * size) + index + 1}</span>
@@ -145,7 +149,8 @@ const PostPageComponent = () => {
 
           {/* 📝 글쓰기 버튼 (맨 오른쪽 정렬) */}
           
-          {role === 'PROFESSOR' || role === 'ADMIN'? <button className="text-white bg-blue-500 hover:bg-blue-600 font-semibold py-2 px-4 rounded ml-auto" onClick={() => { navi('/write') }}>
+          {role === 'PROFESSOR' || role === 'ADMIN'? <button className="text-white bg-blue-500 hover:bg-blue-600 font-semibold py-2 px-4 rounded ml-auto" 
+          onClick={() => { navi('/write',{state: { loc}}) }}>
             글쓰기
           </button> : <></>}
 
