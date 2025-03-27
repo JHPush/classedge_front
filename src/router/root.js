@@ -44,10 +44,6 @@ const root = createBrowserRouter([
     path: "modify/:id",
     element: <Suspense fallback={Loading}><ModifyPage /></Suspense>
   },
-
-
-
-
 ])
 
 export default root;

@@ -12,12 +12,10 @@ const LogoutBtn = () => {
             dispatch(logout());
             navi('/login', { replace: true })
     };
-
     return (
         <button
             className="bg-transparent hover:text-red-600 py-2 px-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-100"
-            onClick={handleLogout}
-        >
+            onClick={handleLogout}>
             Logout
         </button>
     );

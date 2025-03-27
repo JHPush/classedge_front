@@ -4,16 +4,10 @@ import { getRefresh } from "../api/memberApi/security";
 
 const jwtAxios = axios.create();
 
-const refreshJWT = async (accessToken, refreshToken) => {
-
-}
-
 const beforeReq = (config) => { // config : request 전송시 데이터
-    console.log("before Request....")
     const memberInfo = getCookie('member');
 
     if (!memberInfo) {
-        console.error('Member Not Found...')
         return Promise.reject({
             response: { data: { error: 'REQUIRED_LOGIN' } }
         })
@@ -23,15 +17,11 @@ const beforeReq = (config) => { // config : request 전송시 데이터
     return config;
 }
 const requestFail = (error) => {
-    console.log("before Request Failed....")
-    console.log("error : ", error);
+    console.log("Request failed - error : ", error);
     return Promise.reject(error);
 
 }
 const beforeRes = async (res) => { 
-    console.log("before Response ....");
-    console.log("res : ", res);
-
     const data = res.data;
     if (data && data.error === 'ERROR_ACCESS_TOKEN') { 
         const memberCookie = getCookie('member');

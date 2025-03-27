@@ -1,23 +1,23 @@
 import { useEffect, useRef, useState } from "react"
-import { getCookie } from "../../utils/cookieUtils";
 import SockJS from "sockjs-client";
 import { Client } from '@stomp/stompjs';
 import { getOriginNotifications, updateReadNotifications } from "../../api/memberApi/notify";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const NotificationItem = ({ name, content, date, postId }) => {
-    const convertMessage = ()=>{
-        return content === "NOTICE"? content= "공지" : content==="TASK"? content="과제" : content="댓글"
+const NotificationItem = ({ name,sender, content, date, postId }) => {
+
+    // 알람 종류 텍스트 변환
+    const convertMessage = () => {
+        return content === "NOTICE" ? content = "공지" : content === "TASK" ? content = "과제" : content = "댓글"
     }
     return (
         <div style={{ border: "1px solid #ddd", padding: "10px", margin: "5px 0" }}>
-            <p>{name + "님이＂" + convertMessage() + "＂를 작성하였습니다."}</p>
+            <p>{sender + "님이＂" + convertMessage() + "＂를 작성하였습니다."}</p>
             <p>{date}</p>
             <Link to={`/view/${postId}`}>
                 <button className="text-blue-500">자세히 보기</button>
             </Link>
-
-            {/* <a href={link} target="_blank" rel="noopener noreferrer">자세히 보기</a> */}
         </div>
     );
 };
@@ -27,24 +27,17 @@ const AlertPop = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [userEmail, setUserEmail] = useState('');
     const popupRef = useRef(null);
+    const member = useSelector(state => state.loginSlicer.initState)
 
     let stompClient = null;
 
-    const handlePopup = (e) => {
-        setIsOpen(!isOpen);
-    }
-
     // 실시간 알람 수신 
     useEffect(() => {
-        console.log("start WebSocket")
-
         if (!userEmail) return;
-        console.log("in WebSocket " + userEmail)
-
         const socket = new SockJS("http://localhost:8080/ws");
         stompClient = new Client({
             webSocketFactory: () => socket,
-            debug: (str) => console.log(str),
+            debug: (str) => console.log(str), // 연결 상태 디버그 정보 출력
             reconnectDelay: 5000, // 자동 재연결 5초
         })
         stompClient.activate(); // WebSocket 클라이언트 활성화
@@ -52,8 +45,8 @@ const AlertPop = () => {
             console.log("Success Connet")
             // 최근 14일 이내 알람 조회 요청
             getOriginNotifications(userEmail).then(data => {
+                console.log(data)
                 setNotifications([...data].sort((a, b) => b.id - a.id));
-
             }).catch(e => {
                 console.log("Error Get Notifications! : " + e)
             })
@@ -80,14 +73,11 @@ const AlertPop = () => {
 
     // 팝업 밖 클릭시 팝업 꺼지게
     useEffect(() => {
-        if (!getCookie('member'))
-            return;
-        setUserEmail(getCookie('member').email);
+        if (!member) return;
+        setUserEmail(member.email);
         const handleClickOutsie = (e) => {
-            if (popupRef.current && !popupRef.current.contains(e.target)) {
+            if (popupRef.current && !popupRef.current.contains(e.target))
                 setIsOpen(false)
-                // setNotifications([])
-            }
         }
         document.addEventListener("mousedown", handleClickOutsie);
         return () => document.removeEventListener("mousedown", handleClickOutsie);
@@ -99,7 +89,6 @@ const AlertPop = () => {
         if (notifications.filter(notify => !notify.isRead).length > 0)
             updateReadNotifications(userEmail).then(data => {
                 notifications.filter(notify => notify.isRead = true)
-                console.log("Notify Update")
             }).catch(e => {
                 console.error("update Notification Failed : " + e)
             })
@@ -108,15 +97,12 @@ const AlertPop = () => {
     return (
         <div className="relative">
             <button
-
                 className={`relative p-2 text-2xl rounded-full transition-transform ${isOpen
-                        ? "bg-blue-500 text-white scale-95"
-                        : "bg-transparent hover:bg-blue-300"
+                    ? "bg-blue-500 text-white scale-95"
+                    : "bg-transparent hover:bg-blue-300"
                     }`}
-
                 type="button"
-                onClick={handleOnClickPopUp}
-            >
+                onClick={handleOnClickPopUp}>
                 <img src="/alert_red.png" className="w-8 h-8" />
                 {notifications.filter(notify => !notify.isRead).length > 0 && (
                     <span className="absolute top-0 right-0 w-5 h-5 text-xs text-white bg-red-500 rounded-full">
@@ -131,10 +117,8 @@ const AlertPop = () => {
                     style={{
                         maxHeight: "500px", // 팝업 최대 높이
                         overflowY: "auto", // 수직 스크롤 활성화
-                    }}
-                >
+                    }}>
                     <h3 className="text-lg font-bold mb-2 text-green-800">알림</h3>
-
                     <ul>
                         <div>
                             <div>
@@ -147,6 +131,7 @@ const AlertPop = () => {
                                             return (
                                                 (<NotificationItem
                                                     key={noti.id}
+                                                    sender={noti.sender}
                                                     name={noti.memberName}
                                                     content={noti.content}
                                                     date={noti.regDate}
@@ -163,6 +148,7 @@ const AlertPop = () => {
                                             return (
                                                 (<NotificationItem
                                                     key={noti.id}
+                                                    sender={noti.sender}
                                                     name={noti.memberName}
                                                     content={noti.content}
                                                     date={noti.regDate}
@@ -171,7 +157,6 @@ const AlertPop = () => {
                                         })
                                         : <p className="text-gray-500">알림이 없습니다.</p>
                                 }
-
                             </div>
                         </div>
                     </ul>

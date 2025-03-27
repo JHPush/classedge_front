@@ -28,7 +28,7 @@ export const postComment = async(comment, files) =>{
 
     // 파일 추가
     const fileArr = [...files]
-    if(fileArr.length >0)
+    if(fileArr != null && fileArr.length >0)
     fileArr.forEach((file) => {
         formData.append('files', file);
     });
