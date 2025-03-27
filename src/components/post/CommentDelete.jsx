@@ -13,7 +13,6 @@ const CommentDelete =({id, hasReplies, onDeleteSuccess})=>{
         if (!isConfirmed) return;
 
         try{
-            
             deleteComment(id);
             onDeleteSuccess(id);
 

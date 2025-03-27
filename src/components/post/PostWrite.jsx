@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { registerPost } from '../../api/postApi/postApi';
-import FileUpload from './FileUpload';
 import { useNavigate } from 'react-router-dom';  // 페이지 리디렉션을 위한 useNavigate
 
 

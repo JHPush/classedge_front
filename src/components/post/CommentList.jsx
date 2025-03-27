@@ -4,18 +4,14 @@ import SubCommentForm from "./SubCommentForm";
 import FileDownload from "./FileDownload";
 import CommentDelete from "./CommentDelete";
 import CommentModify from "./CommentModify";
-import "./postCss/Comment.css"
 import { useSelector } from "react-redux";
-
-
+import "./postCss/Comment.css"
 
 const initialState = {
   contents: '',
   nickname: '',
   fileItems:[]
 };
-
-
 
 const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
   const nickname = useSelector(state => state.loginSlicer.initState.nickname);
@@ -115,7 +111,7 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
   <ul>
     {comments.length > 0 ? (
       comments.map((comment) => (
-        <li key={comment.id} className="comment-item" style={{ marginLeft: `${comment.level * 20}px` }}>
+        <li key={comment.id} className="comment-item" style={{ marginLeft: `${comment.level * 1}px` }}>
           <div className="comment-header">
             <span className="comment-author">{comment.nickname}</span>
             <span className="comment-date">{comment.regDate}</span>

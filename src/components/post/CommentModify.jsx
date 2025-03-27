@@ -67,7 +67,7 @@ const CommentModify = ({id, currentContent , onModified, fileItems, isEditing, o
             {fileItems.map((file) => (
               <div key={file.id} className="file-item">
                 <FileDownload file={file} />
-                <FileDelete id={file.id} onFileDeleted={handleFileDeleted} />
+                <FileDelete id={file.id} onFileDeleted={handleFileDeleted} isPost={false}/>
               </div>
             ))}
           </div>

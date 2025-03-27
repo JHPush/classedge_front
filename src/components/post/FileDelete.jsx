@@ -1,7 +1,7 @@
 import { deleteFile } from "../../api/postApi/postApi";
 
 
-const FileDelete =({id, onFileDeleted})=>{
+const FileDelete =({id, onFileDeleted, isPost})=>{
 
     const handleDelete = ()=>{
 
@@ -20,9 +20,12 @@ const FileDelete =({id, onFileDeleted})=>{
     }
 
     return (
-        <button onClick={handleDelete} className="file-delete-btn">
-          파일 삭제
-        </button>
+        <button 
+        onClick={handleDelete} 
+        className={`file-delete-btn ${isPost ? 'post-file-btn' : 'comment-file-btn'}`}
+    >
+        {isPost ? "파일삭제" : "파일삭제"}
+    </button>
       );
       
 

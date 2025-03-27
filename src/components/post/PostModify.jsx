@@ -125,7 +125,7 @@ const PostModify = () => {
                     <div key={file.id} className="flex items-center justify-between bg-white p-2 rounded-md shadow-sm mb-2">
                          <FileDownload file={file} />
                         {/* <span className="text-gray-600">{file.fileName}</span> */}
-                        <FileDelete id={file.id} onFileDeleted={handleFileDeleted} />
+                        <FileDelete id={file.id} onFileDeleted={handleFileDeleted} isPost={true} />
                     </div>
                 ))}
             </div>

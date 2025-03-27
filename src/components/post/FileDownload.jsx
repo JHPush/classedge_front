@@ -22,6 +22,7 @@ const FileDownload = ({file, isPost}) => {
             }
          }
         getThumbnail();
+
     },[file])
 
 
@@ -54,21 +55,17 @@ const FileDownload = ({file, isPost}) => {
         <>
         <div className={`file-download-container ${isPost ? 'post-file' : 'comment-file'}`}>
             {/* 썸네일 이미지 */}
-            <div className={`thumbnail-container ${isPost ? 'post-thumbnail' : 'comment-thumbnail'}`}>
-                {thumbnailUrl ? (
+            {thumbnailUrl ? (
+                <div className={`thumbnail-container ${isPost ? 'post-thumbnail' : 'comment-thumbnail'}`}>
                     <img
                         src={thumbnailUrl}
                         alt={file.fileName}
                         className={`thumbnail-img ${isPost ? 'post-thumbnail-img' : ''}`}  // 게시글일 경우 별도 클래스 추가
                     />
-                ) : (
-                    <span className="thumbnail-placeholder">
-                        <span className="text-gray-500 text-sm">No Image</span>
-                    </span>
-                )}
-            </div>
-    
-            {/* 다운로드 버튼 */}
+                </div>
+            ) : null} {/* 썸네일이 없을 때 빈 공간을 만들지 않음 */}
+        
+            {/* 다운로드 버튼 - 이미지 파일이 아닌 경우에도 파일 이름만 표시 */}
             <button
                 onClick={() => downloadFileHandler(file.id, file.fileName)}
                 className="file-download-btn text-blue-500 font-medium hover:underline"
@@ -77,8 +74,6 @@ const FileDownload = ({file, isPost}) => {
             </button>
         </div>
     </>
-    
-
     
     )
 }

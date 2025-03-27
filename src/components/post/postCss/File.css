@@ -26,31 +26,32 @@
 /* 게시글 스타일 */
 .post-file {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center;  /* 썸네일과 버튼이 같은 라인에 오도록 설정 */
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .post-thumbnail {
-  max-width: 400px;   /* 썸네일이 컨테이너의 크기를 넘어가지 않도록 */
-  max-height: 400px; /* 원하는 최대 높이를 설정 (원사이즈 기준으로 커지지 않도록) */
-  margin-bottom: 0.5rem;
+  max-width: 150px;   /* 썸네일이 컨테이너의 크기를 넘어가지 않도록 */
+  max-height: 150px; /* 원하는 최대 높이를 설정 (원사이즈 기준으로 커지지 않도록) */
+  margin-right: 10px; /* 썸네일과 버튼 사이의 간격 */
 }
 
 /* 파일 다운로드 버튼 스타일 */
 .file-download-btn {
-  font-size: 16px;
-  padding: 6px 12px;
-  background-color: #d1d5db;  /* 회색 배경 */
-  color: #4b5563;  /* 어두운 회색 글자 */
-  border: none;
-  border-radius: 4px;
+  font-size: 14px;  /* 폰트 크기 조정 */
+  padding: 4px 8px; /* 패딩 줄여서 버튼 크기 축소 */
+  line-height: 1.25; /* 버튼 높이 조정 */
+  text-decoration: none;
+  color: #2b6cb0; /* 파란색 */
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: color 0.3s;
+  margin-left: auto; /* 버튼을 우측으로 밀기 위해 사용 */
 }
 
 .file-download-btn:hover {
-  background-color: #9ca3af;  /* 마우스 오버 시 더 어두운 회색으로 변경 */
+  color: #3182ce; /* 마우스 오버 시 색상 변경 */
 }
 
 /* 댓글 스타일 */
@@ -64,8 +65,8 @@
 }
 
 .comment-thumbnail {
-  width: 48px;
-  height: 48px;
+  width: 55px;
+  height: 55px;
   margin-right: 12px;
 }
 
@@ -73,27 +74,78 @@
   font-size: 14px;
 }
 
-/* 파일 삭제 버튼 스타일 */
-.file-delete-btn {
+/* 게시글 파일 삭제 버튼 스타일 */
+.comment-file-btn {
   background-color: #fef2f2;  /* 연한 빨간 배경 */
   color: #e53e3e;  /* 빨간색 텍스트 */
-  font-size: 0.875rem;
+  font-size: 0.875rem; /* 폰트 크기 조정 */
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  padding: 6px 12px;
+  padding: 6px 12px;  /* 패딩 조정하여 버튼 크기 고정 */
   transition: background-color 0.3s ease;
   margin-left: 8px;
+  white-space: nowrap;  /* 텍스트가 한 줄로 나오게 설정 */
+  display: inline-flex; /* 버튼 레이아웃을 인라인 플렉스로 설정 */
+  align-items: center; /* 아이콘이나 텍스트가 잘 정렬되도록 */
+  justify-content: center; /* 텍스트 중앙 정렬 */
 }
 
+/* 댓글 파일 삭제 버튼 스타일 */
+ .comment-file-btn {
+  background-color: #fef2f2;  /* 연한 빨간 배경 */
+  color: #e53e3e;  /* 빨간색 텍스트 */
+  font-size: 0.875rem; /* 폰트 크기 조정 */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 12px;  /* 패딩 조정하여 버튼 크기 고정 */
+  transition: background-color 0.3s ease;
+  margin-left: 8px; /* 파일명과 삭제 버튼 간의 간격 */
+  white-space: nowrap;  /* 텍스트가 한 줄로 나오게 설정 */
+  display: inline-flex; /* 버튼 레이아웃을 인라인 플렉스로 설정 */
+  align-items: center; /* 아이콘이나 텍스트가 잘 정렬되도록 */
+  justify-content: center; /* 텍스트 중앙 정렬 */
+}
+
+/* 댓글 파일 삭제 버튼 위치 조정 */
+.comment-file-btn {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #fff;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;  /* 파일명과 삭제 버튼을 양옆으로 배치 */
+}
+
+/* 댓글에서 파일 삭제 버튼의 위치 */
+.comment-file-btn{
+  margin-left: 680px;  /* 좌측 간격 */
+  margin-top: 5px;   /* 상단 간격 추가 */
+  margin-bottom: 10px; /* 하단 간격 추가 */
+  order: 1;  /* 요소의 표시 순서 조정 */
+}
+
+/* 호버 효과 */
 .file-delete-btn:hover {
   background-color: #fbd5d5;  /* 마우스 오버 시 색상 변경 */
   color: #e53e3e;  /* 텍스트 색상은 그대로 */
 }
 
+/* 반응형 스타일: 작은 화면에서 버튼 크기 조정 (선택적) */
+@media (max-width: 768px) {
+  .file-delete-btn {
+    padding: 4px 8px;  /* 작은 화면에서는 버튼 크기를 줄임 */
+  }
+}
+
+
+
 /* 게시글 및 댓글 파일 다운로드 버튼 스타일 */
 .file-download-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;  /* 요소들을 왼쪽으로 정렬 */
+  width: 100%;
 }
