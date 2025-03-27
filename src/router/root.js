@@ -16,6 +16,8 @@ const TodoList = lazy(() => import("../pages/todo/ListPage"))
 const Login = lazy(() => import("../components/member/LoginPage"))
 const SignUp = lazy(()=> import("../components/member/SignupPage"))
 
+const KakaoRedirect = lazy(() => import("../pages/KakaoRedirect"))
+
 const root = createBrowserRouter([
 
   {
@@ -38,6 +40,10 @@ const root = createBrowserRouter([
     path: "todo",
     element: <Suspense fallback={Loading}><TodoIndex /></Suspense>,
     children: todoRouter()
+  },
+  {
+    path: "oauth/kakao",// 이 부분 확인
+    element: <Suspense fallback={Loading}><KakaoRedirect /></Suspense> // 카카오 리다이렉트 경로 추가
   }
 
 

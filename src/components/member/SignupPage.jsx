@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import './memberCss/SignupPage.css'; // CSS 파일 import
 import { checkOverlap, postSignUp } from '../../api/memberApi/security';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SignupPage = () => {
 
     const navi = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+    
+    const kakaoNickname = searchParams.get("kakaoNickname");
+
     const [confirmPassword, setConfirmPassword] = useState('')
     const [allCheck, setAllCheck] = useState(null);
     const [formData, setFormData] = useState({
@@ -13,7 +17,7 @@ const SignupPage = () => {
         id: '',
         memberName: '',
         password: '',
-        nickname: '',
+        nickname: kakaoNickname,
         loginType: 'NORMAL'
     });
     const [overlap, setOverlap] = useState({
@@ -21,6 +25,7 @@ const SignupPage = () => {
         id: null,
         nickname: null
     });
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,7 +36,9 @@ const SignupPage = () => {
     }
 
     const handleCheckOverlap = (e)=>{
+        console.log("ddd");
         console.log(e.target);
+        console.log("ddd");
         const { name, value } = e.target;
         checkOverlap(e.target.name, e.target.value)
         .then(data=>{
