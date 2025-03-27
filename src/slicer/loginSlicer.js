@@ -14,7 +14,6 @@ const initState = {
 // 액션 타입, 비동기 처리 함수
 export const loginPostAsync = createAsyncThunk('loginSlicer/loginPostAsync', async (param) => {
     const res = await postLogin(param);
-
     return res; // Promise 객체 리턴
 })
 
@@ -25,16 +24,10 @@ const loginSlicer = createSlice({
     initialState: cookie ? {initState:{id: cookie.id, nickname: cookie.nickname, memberName: cookie.memberName, loginType: cookie.loginType, email: cookie.email, role: cookie.role}} : initState,
     reducers: {
         login: (state, action) => { // state : 현재 상태 정보 / action - 전달받은 액션 객체
-            console.log('login reducer..')
-            console.log('action : ', action)
-            console.log('action.payload : ', action.payload)
-
             return { initState: action.payload };
         },
         logout: () => {
-            console.log('logout reducer..')
             removeCookie('member')
-
             return { initState: '' };
         }
     },
@@ -45,7 +38,6 @@ const loginSlicer = createSlice({
             })
             .addCase(loginPostAsync.fulfilled, (state, action) => {
                 console.log('extra reduce loginPostAsync.fulfilled...');
-                console.log('login fulfilled', action);
                 console.log('fulfilled payload', action.payload);
 
                 if(!action.payload.error)

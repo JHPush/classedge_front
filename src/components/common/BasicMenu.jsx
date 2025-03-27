@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 const BasicMenu = () => {
 
+  // 리덕스 상태정보 가져오기
   const member = useSelector(state => state.loginSlicer.initState)
 
   useEffect(()=>{
@@ -29,9 +30,7 @@ const BasicMenu = () => {
         <div className="w-1/5 flex justify-end bg-transparent p-4 font-medium">
           <AlertPop />
           <LogoutBtn />
-
         </div>
-
       </nav>
       : <></>
   );

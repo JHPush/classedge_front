@@ -4,7 +4,6 @@ import { checkOverlap, postSignUp } from '../../api/memberApi/security';
 import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
-
     const navi = useNavigate();
     const [confirmPassword, setConfirmPassword] = useState('')
     const [allCheck, setAllCheck] = useState(null);
@@ -31,17 +30,12 @@ const SignupPage = () => {
     }
 
     const handleCheckOverlap = (e)=>{
-        console.log(e.target);
         const { name, value } = e.target;
         checkOverlap(e.target.name, e.target.value)
         .then(data=>{
             setOverlap({...overlap, [name]:data})
-            
-            console.log("overlap : " + name + " : " + data);
-            
         }).catch(e=>{
             console.log(e);
-            
         })
     }
 

@@ -34,25 +34,16 @@ const PostView = () => {
       setCommentRefreshToggle(prev => !prev);
     }
  
-
-
     useEffect(() => {
-      console.log("게시글정보");
         //게시글 정보
         getPost(id)
             .then(data => { 
               console.log("Received post data:", data);
                 setPost(data);
-                
             })
             .catch(error =>{
                 console.error("Error: ", error);
             })
-   
-      console.log("댓글목록");
-      
-        
-
     },[id]);
 
     const handleModifyClick = () =>{
