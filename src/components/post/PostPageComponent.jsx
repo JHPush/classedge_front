@@ -23,7 +23,7 @@ const initialState = {
 
 
 const PostPageComponent = () => {
-  const role = useSelector(state => state.loginSlicer.role);
+  const role = useSelector(state => state.loginSlicer.initState.role);
 
   const [searchParams] = useSearchParams();
   const location = useLocation();

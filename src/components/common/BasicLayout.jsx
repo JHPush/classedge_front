@@ -6,10 +6,11 @@ import { useEffect } from "react";
 const BasicLayout = ({ children }) => {
   const navi = useNavigate();
 
-  const id = useSelector(state => state.loginSlicer.id);
+  const member = useSelector(state => state.loginSlicer.initState);
 
   useEffect(()=>{
-    if (!id)
+    console.log(member)
+    if (!member)
       navi('/login', { replace: true });
   },[])
 

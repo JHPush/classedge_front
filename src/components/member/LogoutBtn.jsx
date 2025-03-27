@@ -1,13 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { removeCookie } from "../../utils/cookieUtils";
+import { useDispatch } from "react-redux";
+import { logout } from "../../slicer/loginSlicer";
 
 const LogoutBtn = () => {
     const navi = useNavigate();
-
+    const dispatch = useDispatch();
     const handleLogout = () => {
             alert("로그아웃 되었습니다");
-            removeCookie('member')
+            dispatch(logout());
             navi('/login', { replace: true })
     };
 

@@ -18,7 +18,7 @@ const initialState = {
 
 
 const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
-  const nickname = useSelector(state => state.loginSlicer.nickname);
+  const nickname = useSelector(state => state.loginSlicer.initState.nickname);
 
     const [comments, setComments] = useState([]);
     const [replyVisible, setReplyVisible] = useState(null);

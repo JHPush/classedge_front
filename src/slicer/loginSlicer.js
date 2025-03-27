@@ -3,7 +3,12 @@ import { getCookie, removeCookie, setCookie } from "../utils/cookieUtils";
 import { postLogin } from "../api/memberApi/security";
 
 const initState = {
-    id: ""
+    id: "",
+    nickname:"",
+    memberName:"",
+    loginType:"",
+    email:"",
+    role:""
 }
 
 // 액션 타입, 비동기 처리 함수
@@ -17,20 +22,20 @@ const cookie = getCookie('member');
 
 const loginSlicer = createSlice({
     name: "loginSlicer",
-    initialState: cookie ? cookie : initState,
+    initialState: cookie ? {initState:{id: cookie.id, nickname: cookie.nickname, memberName: cookie.memberName, loginType: cookie.loginType, email: cookie.email, role: cookie.role}} : initState,
     reducers: {
         login: (state, action) => { // state : 현재 상태 정보 / action - 전달받은 액션 객체
             console.log('login reducer..')
             console.log('action : ', action)
             console.log('action.payload : ', action.payload)
 
-            return { id: action.payload.id };
+            return { initState: action.payload };
         },
         logout: () => {
             console.log('logout reducer..')
             removeCookie('member')
 
-            return { id: '' };
+            return { initState: '' };
         }
     },
     extraReducers: (builder) => {
@@ -46,7 +51,7 @@ const loginSlicer = createSlice({
                 if(!action.payload.error)
                 setCookie('member', JSON.stringify(action.payload), 1)
 
-                return { id: action.payload.id };
+                return { initState: action.payload };
             })
             .addCase(loginPostAsync.rejected, (state, action) => {
                 console.log('extra reduce loginPostAsync.rejected...');
