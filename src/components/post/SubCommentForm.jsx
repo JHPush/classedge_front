@@ -43,15 +43,15 @@ const SubCommentForm = ({id, parentId, onCommentAdded}) => {
 
     return (
         <>
-      <div className="form-container">
+      <div className="reply-form-container">
   <div className="form-group-horizontal">
     <input
       type="text"
-      name="content"
+      name="replyContent"
       placeholder="답글을 입력하세요."
       value={content}
       onChange={handleChange}
-      className="comment-input"
+      className="reply-input"
     />
   </div>
 

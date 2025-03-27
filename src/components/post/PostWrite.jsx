@@ -130,10 +130,29 @@ const Postwrite = () => {
                 ></textarea>
             </div>
 
-            {/* 파일 업로드 */}
+           {/* 파일 업로드 */}
             <div className="mb-4">
-                <input type="file" onChange={handleFileChange} multiple className="p-2 border rounded-md" />
+                <input 
+                    type="file" 
+                    onChange={handleFileChange} 
+                    multiple 
+                    className="p-2 border rounded-md" 
+                    style={{
+                        width: '100%',
+                        padding: '12px',
+                        fontSize: '1rem',
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        backgroundColor: '#fff',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        boxSizing: 'border-box',
+                        display: 'block',
+                        margin: '0 auto',
+                    }} 
+                />
             </div>
+
 
             {/* 등록 버튼 */}
             <div className="flex justify-end">

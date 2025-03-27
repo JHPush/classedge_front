@@ -147,7 +147,7 @@ const CommentList = ({id, refreshTrigger, onCommentAdded}) =>{
               {editMode !== comment.id && (
                 <button onClick={() => handleEditToggle(comment.id)} className="comment-action-btn">수정</button>
               )}
-              <CommentDelete id={comment.id} onDeleteSuccess={handleDeleteSuccess} />
+              <CommentDelete id={comment.id} hasReplies={comment.subComments.length > 0} onDeleteSuccess={handleDeleteSuccess} />
             </div>
           )}
 
