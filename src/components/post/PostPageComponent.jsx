@@ -145,7 +145,7 @@ const PostPageComponent = () => {
 
           {/* 📝 글쓰기 버튼 (맨 오른쪽 정렬) */}
           
-          {role === 'PROFESSOR'? <button className="text-white bg-blue-500 hover:bg-blue-600 font-semibold py-2 px-4 rounded ml-auto" onClick={() => { navi('/write') }}>
+          {role === 'PROFESSOR' || role === 'ADMIN'? <button className="text-white bg-blue-500 hover:bg-blue-600 font-semibold py-2 px-4 rounded ml-auto" onClick={() => { navi('/write') }}>
             글쓰기
           </button> : <></>}
 

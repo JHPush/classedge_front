@@ -8,7 +8,7 @@ const prefix = `${API_SERVER_HOST}/api/v1`;
 
 export const getPostBoard = async (limit) => {
     console.log('limit : ', limit);
-    const res = await jwtAxios.get(`${prefix}/posts`, { params: { limit } });  //posts?limit=5
+    const res = await jwtAxios.get(`${prefix}/posts?limit=${limit}`);  //posts?limit=5
     return res.data;
 }
 export const getComment = async (id) => {
@@ -99,7 +99,7 @@ export const putComment =async(comment) =>{
 
 //파일다운로드
 export const downloadFile = async (id) => {
-    const res = await jwtAxios.get(`${prefix}/files/download/${id}`, { responseType: 'blob' })
+    const res = await jwtAxios.get(`${prefix}/files/download?value=${id}`, { responseType: 'blob' })
     return res.data;
 }
 
@@ -154,7 +154,7 @@ export const getPosts = async (pageParam) => { // { page: 1, size: 10, keyfield:
 
 //파일 삭제
 export const deleteFile = async(id) =>{
-    const res = await jwtAxios.delete(`${prefix}/files/delete/${id}`)
-    console.log('Deleting file at: ', `/${prefix}/files/delete/${id}`);
+    const res = await jwtAxios.delete(`${prefix}/files/delete?value=${id}`)
+    console.log('Deleting file at: ', `/${prefix}/files/delete?value=${id}`);
     return res.data
 }
