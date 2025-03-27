@@ -3,11 +3,16 @@ import AlertPop from "../member/AlertPop";
 import LogoutBtn from "../member/LogoutBtn";
 import { getCookie } from "../../utils/cookieUtils";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const BasicMenu = () => {
 
-  const member = useSelector(state => state.loginSlicer)
+  const member = useSelector(state => state.loginSlicer.initState)
 
+  useEffect(()=>{
+    console.log(member)
+  }, [])
+  
   return (
     member != null ?
       <nav className="bg-white shadow-md p-4 flex justify-between items-center">
