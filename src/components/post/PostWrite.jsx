@@ -14,7 +14,6 @@ const initialState = {
 const Postwrite = () => {
     const [post, setPost] = useState({ ...initialState });
     const [postId, setPostId] = useState(null);
-    //const [uploadVisible, setUploadVisible] = useState(false); //파일 업로드 창
     const navigate = useNavigate();  // 페이지 이동을 위한 hook
     const [files, setFiles] = useState([]);
 
@@ -52,10 +51,6 @@ const Postwrite = () => {
         }
     }
 
-    // const toggleUpload = () => {
-    //     setUploadVisible(!uploadVisible);
-    // }
-
     const MAX_FILE_SIZE = 3 * 1024 * 1024; // 개당 3MB
     const MAX_TOTAL_SIZE = 10 * 1024 * 1024; // 전체 총합 10MB
 
@@ -76,19 +71,20 @@ const Postwrite = () => {
         // 개별 파일 크기 초과 확인
         if (invalidFiles.length > 0) {
             alert(`파일 크기가 너무 큽니다. 개별 파일 크기는 최대 3MB입니다.`);
-            setFiles([]); // 상태 초기화
+            setFiles([]); 
         }
         // 전체 파일 크기 초과 확인
         else if (totalSize > MAX_TOTAL_SIZE) {
             alert(`파일 크기 총합이 10MB를 초과할 수 없습니다.`);
-            setFiles([]); // 상태 초기화
+            setFiles([]); 
         } else {
-            setFiles(selectedFiles); // 모든 조건을 만족하면 파일 상태 업데이트
+            setFiles(selectedFiles); 
         }
 
         console.log(selectedFiles);
 
     }
+    
     return (
         <div className="max-w-2xl mx-auto bg-white p-6 shadow-md rounded-lg">
 
