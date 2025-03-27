@@ -14,6 +14,7 @@ const SignUp = lazy(()=> import("../components/member/SignupPage"))
 const Task = lazy(()=>import("../components/post/TaskPage"))
 
 const KakaoRedirect = lazy(() => import("../components/member/KakaoRedirect"))
+const AdminPage = lazy(() => import("../components/member/AdminPage"));
 
 const root = createBrowserRouter([
 
@@ -48,8 +49,11 @@ const root = createBrowserRouter([
   {
     path: "oauth/kakao",// 이 부분 확인
     element: <Suspense fallback={Loading}><KakaoRedirect /></Suspense> // 카카오 리다이렉트 경로 추가
+  },
+  {
+    path: "admin",
+    element: <Suspense fallback={Loading}><AdminPage /></Suspense>
   }
-
 
 ])
 

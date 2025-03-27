@@ -23,6 +23,7 @@ const BasicMenu = () => {
           <Link to={{ pathname: "/task" }} state='NOTICE'
             className="text-lg font-semibold text-gray-700 hover:text-blue-500 transition">📢 공지사항</Link>
           <Link to={{ pathname: "/task" }} state='TASK' className="text-lg font-semibold text-gray-700 hover:text-blue-500 transition">📌 과제</Link>
+          {member.role == 'ADMIN'?<Link to={{ pathname: "/admin" }} className="text-lg font-semibold text-gray-700 hover:text-blue-500 transition">⚙️ 관리자</Link>:<></>}
         </div>
         <div className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition cursor-pointer mr-4">
           사용자 : {member.nickname}
