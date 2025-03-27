@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { registerPost } from '../../api/postApi/postApi';
+import { deletePost, registerPost } from '../../api/postApi/postApi';
 import { useLocation, useNavigate } from 'react-router-dom';  // 페이지 리디렉션을 위한 useNavigate
 
 
@@ -62,7 +62,7 @@ const Postwrite = () => {
                     })
                     .catch(error => {
                         console.error("Error: ", error);
-
+                        alert('게시글 등록에 실패하였습니다')
                     });
 
             }
