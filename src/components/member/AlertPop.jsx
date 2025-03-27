@@ -9,7 +9,7 @@ const NotificationItem = ({ name,sender, content, date, postId }) => {
 
     // 알람 종류 텍스트 변환
     const convertMessage = () => {
-        return content === "NOTICE" ? content = "공지" : content === "TASK" ? content = "과제" : content = "댓글"
+        return content === "NOTICE" ? content = "공지" : content === "TASK" ? content = "과제" : content
     }
     return (
         <div style={{ border: "1px solid #ddd", padding: "10px", margin: "5px 0" }}>
