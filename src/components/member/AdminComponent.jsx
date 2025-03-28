@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllMembers, putMember } from "../../api/memberApi/admin";
+import { getAllMembers, putMember, putStudentToProfessor } from "../../api/memberApi/admin";
 
 const AdminComponent = () => {
   const [teachers, setTeachers] = useState([]);
@@ -38,22 +38,44 @@ const AdminComponent = () => {
   }, []);
 
   const handleOnDelete = (email) => {
-    putMember(email)
-      .then((data) => {
-        console.log("Success Fix Member Withdraw : ", data);
+    if (window.confirm("회원을 탈퇴 처리 하시겠습니까?")) {
+      putMember(email)
+        .then((data) => {
+          console.log("Success Fix Member Withdraw : ", data);
 
-        // 삭제된 회원을 화면에서 제거
-        setTeachers((prevTeachers) =>
-          prevTeachers.filter((teacher) => teacher.email !== email)
-        );
+          // 삭제된 회원을 화면에서 제거
+          setTeachers((prevTeachers) =>
+            prevTeachers.filter((teacher) => teacher.email !== email)
+          );
 
-        setStudents((prevStudents) =>
-          prevStudents.filter((student) => student.email !== email)
-        );
-      })
-      .catch((e) => {
-        console.error("error : ", e);
-      });
+          setStudents((prevStudents) =>
+            prevStudents.filter((student) => student.email !== email)
+          );
+        })
+        .catch((e) => {
+          console.error("error : ", e);
+        });
+    }
+  };
+
+  const handleMakeTeacher = (email) => {
+    if (window.confirm("강사 등록을 진행하시겠습니까?")) {
+      // 학생을 강사로 변경하는 API 호출
+      putStudentToProfessor(email)
+        .then((data) => {
+          console.log("Success make Student to Teacher : ", data);
+
+          // 변경된 학생을 강사 목록에 추가하고, 학생 목록에서 제거
+          const studentToMakeTeacher = students.find((student) => student.email === email);
+          setTeachers((prevTeachers) => [...prevTeachers, studentToMakeTeacher]); // 강사 목록에 추가
+          setStudents((prevStudents) =>
+            prevStudents.filter((student) => student.email !== email) // 학생 목록에서 제거
+          );
+        })
+        .catch((e) => {
+          console.error("error : ", e);
+        });
+    }
   };
 
   return (
@@ -97,12 +119,20 @@ const AdminComponent = () => {
               <span>이메일: {student.email}</span>
               <span>역할: {student.role}</span>
               <span>상태: {student.isWithdraw ? "탈퇴" : "활성"}</span>
-              <button
-                className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600"
-                onClick={() => handleOnDelete(student.email)}
-              >
-                삭제
-              </button>
+              <div className="flex space-x-2">
+                <button
+                  className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600"
+                  onClick={() => handleOnDelete(student.email)}
+                >
+                  삭제
+                </button>
+                <button
+                  className="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600"
+                  onClick={() => handleMakeTeacher(student.email)}
+                >
+                  강사 등록
+                </button>
+              </div>
             </li>
           ))}
         </ul>
