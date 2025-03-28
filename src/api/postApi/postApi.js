@@ -20,6 +20,7 @@ export const getComment = async (id) => {
 //댓글등록
 export const postComment = async(comment, files) =>{
 
+    try {
     const formData = new FormData();
 
     // Blob을 사용하여 JSON 데이터를 추가해야 함
@@ -40,15 +41,18 @@ export const postComment = async(comment, files) =>{
         }}
     )
 
-
     return res;
-}
+
+    } catch (error) {
+        console.error("게시글 등록 중 오류 발생:", error);
+    }}
 
 
 //게시글등록
 export const registerPost = async (post, files) => {
     const formData = new FormData();
 
+    try {
     // Blob을 사용하여 JSON 데이터를 추가해야 함
     const jsonBlob = new Blob([JSON.stringify(post)], { type: 'application/json' });
     formData.append('postDto', jsonBlob);  // postDto를 Blob으로 변환 후 추가
@@ -68,7 +72,10 @@ export const registerPost = async (post, files) => {
     )
     
     return response.data;
-};
+    
+    } catch (error) {
+        console.error("게시글 등록 중 오류 발생:", error);
+    }}
 
 
 //게시글삭제

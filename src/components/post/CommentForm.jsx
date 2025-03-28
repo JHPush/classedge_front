@@ -85,6 +85,7 @@ const CommentForm = ({ id, onCommentAdded }) => {
         })
           .catch(error => {
             console.error("댓글 등록 실패: ", error);
+            alert('댓글 등록에 실패하였습니다')
 
           })
       }
