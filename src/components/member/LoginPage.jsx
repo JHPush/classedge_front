@@ -3,7 +3,7 @@ import "./memberCss/LoginPage.css"; // 스타일을 별도로 관리합니다.
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginPostAsync } from "../../slicer/loginSlicer";
-import { FRONT_PREFIX_DOCKER } from "../../utils/globalVariable";
+import { API_PREFIX_DOCKER } from "../../utils/globalVariable";
 
 const initForm = {
     id: '',

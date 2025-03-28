@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: classedgi-front
+  namespace: classedge
+spec:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: classedgi-front-pod
+  template:
+    metadata:
+      labels:
+        app: classedgi-front-pod
+    spec:
+      containers:
+      - name: classedgi-front-container
+        image: jaechang13/classedgifront:v1
+        ports:
+        - containerPort: 80
