@@ -1,7 +1,8 @@
+import { API_PREFIX_DOCKER } from "../../utils/globalVariable";
 import jwtAxios from "../../utils/jwtUtils";
 
 
-const API_SERVER_HOST = 'http://localhost:8080/api/v1';
+const API_SERVER_HOST = `http://${API_PREFIX_DOCKER}/api/v1`;
 
 // DB의 알람 가져오기
 export const getOriginNotifications = async(email)=>{

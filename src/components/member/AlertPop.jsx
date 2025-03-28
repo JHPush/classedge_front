@@ -4,6 +4,7 @@ import { Client } from '@stomp/stompjs';
 import { getOriginNotifications, updateReadNotifications } from "../../api/memberApi/notify";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { API_PREFIX_DOCKER } from "../../utils/globalVariable";
 
 const NotificationItem = ({ name,sender, content, date, postId }) => {
 
@@ -34,7 +35,7 @@ const AlertPop = () => {
     // 실시간 알람 수신 
     useEffect(() => {
         if (!userEmail) return;
-        const socket = new SockJS("http://localhost:8080/ws");
+        const socket = new SockJS(`http://${API_PREFIX_DOCKER}/ws`);
         stompClient = new Client({
             webSocketFactory: () => socket,
             debug: (str) => console.log(str), // 연결 상태 디버그 정보 출력

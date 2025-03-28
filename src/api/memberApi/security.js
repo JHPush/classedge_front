@@ -1,6 +1,7 @@
 import axios from "axios";
+import { API_PREFIX_DOCKER } from "../../utils/globalVariable";
 
-const API_SERVER_HOST = 'http://localhost:8080/api/v1';
+const API_SERVER_HOST = `http://${API_PREFIX_DOCKER}/api/v1`;
 
 // 로그인 요청 (로그인슬라이스에서 사용)
 export const postLogin = async (form) => {
@@ -18,7 +19,7 @@ export const postKakaoLogin = async (code) => {
     console.log("code : ", code);
 
     try {
-        const response = await axios.get(`http://localhost:8080/api/v1/login/kakao?code=${code}`);
+        const response = await axios.get(`http://${API_PREFIX_DOCKER}/api/v1/login/kakao?code=${code}`);
         return response.data;  // 서버에서 반환한 데이터를 리턴
     } catch (error) {
         console.error("로그인 요청 실패:", error);

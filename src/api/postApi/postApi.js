@@ -1,7 +1,8 @@
 
+import { API_PREFIX_DOCKER } from "../../utils/globalVariable";
 import jwtAxios from "../../utils/jwtUtils";
 
-const API_SERVER_HOST = 'http://localhost:8080';
+const API_SERVER_HOST = `http://${API_PREFIX_DOCKER}`;
 
 const prefix = `${API_SERVER_HOST}/api/v1`;
 
