@@ -36,7 +36,7 @@ const LoginPage = () => {
 
     const handleKakaoLogin = () => {
         
-        window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=0dfc6bf7b966b2bdfe198d82fc657170&redirect_uri=http://${FRONT_PREFIX_DOCKER}/oauth/kakao&response_type=code`
+        window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=0dfc6bf7b966b2bdfe198d82fc657170&redirect_uri=http://${API_PREFIX_DOCKER}/oauth/kakao&response_type=code`
     };
 
     return (
