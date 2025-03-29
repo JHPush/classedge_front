@@ -159,13 +159,13 @@ const PostPageComponent = () => {
 
         {/* 🔍 검색 폼 */}
         <div className="flex space-x-2 mt-4">
-          <select value={keyfield} onChange={handleChangeKeyfield} className="p-2 border rounded-md">
+        <select value={keyfield} onChange={handleChangeKeyfield} className="p-2 border rounded-md w-32">
             <option value="">선택</option>
             <option value="nickname">작성자</option>
             <option value="title">제목</option>
             <option value="contents">내용</option>
           </select>
-          <input type="text" placeholder="검색어 입력" value={keyword} onChange={handleChangeKeyword} className="p-2 border rounded-md flex-1" />
+          <input type="text" placeholder="검색어 입력" value={keyword} onChange={handleChangeKeyword} className="p-2 border rounded-md flex-1 min-w-[200px]" />
           <button type="button" onClick={handleClick} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">검색</button>
         </div>
       </div>
