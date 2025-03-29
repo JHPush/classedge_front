@@ -35,7 +35,7 @@ const AlertPop = () => {
     // 실시간 알람 수신 
     useEffect(() => {
         if (!userEmail) return;
-        const socket = new SockJS(`http://${API_PREFIX_DOCKER}/api/v1/ws`);
+        const socket = new SockJS(`http://${API_PREFIX_DOCKER}/ws`);
         stompClient = new Client({
             webSocketFactory: () => socket,
             debug: (str) => console.log(str), // 연결 상태 디버그 정보 출력
