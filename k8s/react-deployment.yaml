@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: classedgi-front-container
-        image: jaechang13/classedgifront:00585c34560582990532f48eb006b91e0144d926
+        image: jaechang13/classedgifront:70204ba596c977d92f8b8008cc00a5525863697d
         ports:
         - containerPort: 80
