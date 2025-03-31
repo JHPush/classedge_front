@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <BasicLayout>
 
-      <div className=" text-3xl">🏠 Home</div>
+      <div className=" text-3xl">🏠 홈페이지</div>
     <HomePageComponent/>
     </BasicLayout>
   );
