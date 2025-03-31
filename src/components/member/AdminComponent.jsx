@@ -108,7 +108,7 @@ const AdminComponent = () => {
 
       {/* 학생 리스트 */}
       <div className="bg-white shadow-md rounded-lg p-4">
-        <h2 className="text-lg font-semibold border-b pb-2 mb-3">학생</h2>
+        <h2 className="text-lg font-semibold border-b pb-2 mb-3">일반 사용자</h2>
         <ul className="space-y-4">
           {students.map((student) => (
             <li
